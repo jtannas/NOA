@@ -1,0 +1,10 @@
+argon2_cffi
+Flask
+Flask-debugtoolbar
+Flask-JSGlue
+Flask-Login
+Flask-SSLify
+Flask-SQLAlchemy
+Flask-WTF
+virtualenvwrapper
+WTForms-Alchemy

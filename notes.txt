@@ -1,0 +1,25 @@
+Best Practices
+    http://exploreflask.com/en/latest/index.html
+
+How to structure a large flask application
+    https://www.digitalocean.com/community/tutorials/how-to-structure-large-flask-applications
+    http://flask.pocoo.org/docs/0.12/blueprints/
+    
+Form Validation with WTForms
+    http://flask.pocoo.org/docs/0.12/patterns/wtforms/
+    http://wtforms.readthedocs.io/en/latest/#
+    
+Login using Flask-login
+    https://flask-login.readthedocs.io/en/latest/
+    
+OAuth2.0 Simplified
+    https://aaronparecki.com/oauth-2-simplified/#web-server-apps
+
+Recaptcha    
+    http://flask-wtf.readthedocs.io/en/stable/form.html
+    https://www.google.com/recaptcha/admin#list
+    http://stackoverflow.com/questions/31093964/recaptcha-public-key-config-not-set-with-flask-wtforms
+    
+Flask WTForms AJAX
+    https://github.com/saltycrane/flask-jquery-ajax-example
+    http://flask-wtf.readthedocs.io/en/latest/csrf.html#ajax

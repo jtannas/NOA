@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block script%}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+{% endblock %}
+
+{% block title %}
+    Signin
+{% endblock %}
+
+{% block main %}
+  <div>
+    <div>
+      <legend>Sign in</legend>
+      
+      <form method="POST" action="." accept-charset="UTF-8" role="form">
+          {{ form.csrf_token }}
+          {{ render_field(form.name, placeholder="Your Name", autofocus="") }}
+          {{ render_field(form.email, placeholder="Your Email Address") }}
+          <a href="#" data-toggle="popover" title="Popover Header" data-content="Password Requirements">
+            <ul>
+              <li>Length between 8 and 32 characters.</li>
+              <li>One or more uppercase letters.</li>
+              <li>One or more lowercase letters.</li>
+              <li>One or more numbers.</li>
+            </ul>
+          </a>
+          {{ render_field(form.password, placeholder="Enter a password") }}
+          {{ render_field(form.confirm, placeholder="Re-enter the password to confirm") }}
+          <p>Please check this box to agree to the <a href="">Terms and Conditions</a> in order to continue</p>
+          {{ render_field(form.accept_tos) }}
+          {{ render_field(form.recaptcha) }}
+        <button type="submit" name="submit">Sign Up</button>
+      </form>  
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,4 @@
+RECAPTCHA_PUBLIC_KEY from Google reCAPTCHA  https://www.google.com/recaptcha/admin#list
+RECAPTCHA_PRIVATE_KEY from Google reCAPTCHA   !!!SECRET!!!  https://www.google.com/recaptcha/admin#list
+CSRF_SESSION_KEY for signing form data  !!!SECRET!!!   
+SECRET_KEY for signing cookies   !!!SECRET!!!
