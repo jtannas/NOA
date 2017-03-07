@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block Logo %}
+NOA Team Task Manager
+{% endblock %}
+
+{% block mainnav %}
+{% if current_user.is_authenticated %}
+    {{ macros.nav_link('', 'Home', 'home') }}
+    {{ macros.nav_link('', 'Tasks', 'inbox') }}
+    {{ macros.nav_link('', 'Projects', 'briefcase') }}
+    {{ macros.nav_link('', 'Reports', 'list-alt') }}
+{% else %}
+{% endif %}
+{% endblock %}
+
+{% block sidenavname %}
+Accounts
+{% endblock %}
+
+{% block sidenav %}
+{{ macros.nav_link('', 'Privacy Policy', 'sunglasses') }}
+{{ macros.nav_link('', 'Terms of Service', 'book') }}
+<li class="nav-divider"></li>
+{% if current_user.is_authenticated %}
+    {{ macros.nav_link('', 'Settings', 'list-alt') }}
+    {{ macros.nav_link('auth.signout', 'Sign-Out', 'log-out') }}
+{% else %}
+    {{ macros.nav_link('auth.signup', 'Register', 'user') }}
+    {{ macros.nav_link('auth.signin', 'Log-In', 'log-in') }}
+{% endif %}
+{% endblock %}
