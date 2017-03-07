@@ -22,7 +22,7 @@ from wtforms.validators import Required, EqualTo, Regexp
 # App Imports:
 # ---------------------------------------------------------------------------
 from .models import User
-from .. import ModelForm
+from ..utils import ModelForm
 
 # ---------------------------------------------------------------------------
 # Form Definitions:

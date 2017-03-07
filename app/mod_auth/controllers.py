@@ -24,7 +24,8 @@ from flask_login import login_user, logout_user, login_required, \
 # App Imports: 
 # ---------------------------------------------------------------------------
 # Import the database object & login_manager
-from .. import db, is_safe_url
+from .. import db
+from ..utils import is_safe_url
 
 # ---------------------------------------------------------------------------
 # Module_Auth Imports: 

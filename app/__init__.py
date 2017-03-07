@@ -8,15 +8,13 @@ Date:       MAR 03, 2017
 # ---------------------------------------------------------------------------
 # Import flask and template operators
 # ---------------------------------------------------------------------------
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_sslify import SSLify
-from flask_wtf import Form, CSRFProtect
+from flask_wtf import CSRFProtect
 from flask_wtf.csrf import CSRFError
-from urllib.parse import urlparse, urljoin
-from wtforms_alchemy import model_form_factory
 
 # ---------------------------------------------------------------------------
 # Define & Configure the WSGI application object
@@ -54,49 +52,6 @@ csrf = CSRFProtect(app)
 def handle_csrf_error(e):
     ''' Handle Cross Site Scripting Errors '''
     return render_template('csrf_error.html', reason=e.description), 400
-    
-# ---------------------------------------------------------------------------
-# Define a method for checking the safety of redirects
-# ---------------------------------------------------------------------------
-def is_safe_url(target):
-    ''' Check to see if a URL redirects within the website
-    by http://flask.pocoo.org/snippets/62/
-    '''
-    ref_url = urlparse(request.host_url)
-    test_url = urlparse(urljoin(request.host_url, target))
-    return test_url.scheme in ('http', 'https') and \
-           ref_url.netloc == test_url.netloc
-
-# ---------------------------------------------------------------------------
-# Define the database object (to be extended by modules and controllers)
-# ---------------------------------------------------------------------------
-
-# Import the database
-db = SQLAlchemy(app)
-
-# Ready a 'Base' tabledef for the rest of the database table to inherit
-class Base(db.Model):
-    ''' Base model tabledef to build others off of '''
-
-    __abstract__  = True
-
-    id            = db.Column(db.Integer, primary_key=True)
-    date_created  = db.Column(db.DateTime,  default=db.func.current_timestamp())
-    date_modified = db.Column(db.DateTime,  default=db.func.current_timestamp(),
-                                           onupdate=db.func.current_timestamp())
-
-
-# ---------------------------------------------------------------------------
-# Build a Base form that integrates WTForms_Alchemy with Flask_wtf
-# ---------------------------------------------------------------------------
-# http://wtforms-alchemy.readthedocs.io/en/latest/advanced.html#using-wtforms-alchemy-with-flask-wtf
-BaseModelForm = model_form_factory(Form)
-
-class ModelForm(BaseModelForm):
-    ''' Base model WTForm to build other off of'''
-    @classmethod
-    def get_session(self):
-        return db.session
 
 # ---------------------------------------------------------------------------
 # HTTP error handling
@@ -105,6 +60,11 @@ class ModelForm(BaseModelForm):
 def not_found(error):
     ''' 404 Error Handler Function '''
     return render_template('404.html'), 404
+
+# ---------------------------------------------------------------------------
+# Define the database object (to be extended by modules and controllers)
+# ---------------------------------------------------------------------------
+db = SQLAlchemy(app)
 
 # ---------------------------------------------------------------------------
 # Import a module / component using its blueprint handler then register

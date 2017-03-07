@@ -9,7 +9,8 @@ Date:       MAR 03, 2017
 # Imports:
 # ---------------------------------------------------------------------------
 # Import the database & base table design from the main application module
-from app import db, Base
+from .. import db
+from ..utils import ModelTable
 
 # Import UserMixin from flask_login to extend the User table
 from flask_login import UserMixin
@@ -24,7 +25,7 @@ from wtforms.validators import Email, Regexp
 # ---------------------------------------------------------------------------
 # User Model
 # ---------------------------------------------------------------------------
-class User(Base, UserMixin):
+class User(ModelTable, UserMixin):
     """ SQLAlchemy User table definition """
 
     # ------------------
