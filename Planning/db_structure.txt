@@ -1,0 +1,47 @@
+Projects
+    - id
+    - ProjectAdmin_id
+    
+ProjectMembers
+    - id
+    - Project_id
+    - Person_id
+    - UserLevel_id
+
+Tickets
+    - id
+    - Project_id
+    - Name
+    - DueDate
+    - Priority_id
+    - AssignedTo_id (integer)
+    - OpenedOn (date)
+    - OpenedBy_id (integer)
+    
+People
+    - id
+    - name
+    - hashed
+    - etc...
+    
+PriorityLevels
+    - id
+    - Priority Level
+    - Description
+    
+UserLevels
+    - id
+    - UserLevel
+    
+TicketStatuses
+    - id
+    - Status
+        - Tentative
+        - Not Started
+        - In-Progress, 25%
+        - In-Progress, 50%
+        - In-Progress, 75%
+        - Final Review
+        - Complete
+        - Cancelled
+        - Void

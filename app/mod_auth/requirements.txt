@@ -1,0 +1,3 @@
+# Additional packages required by this module
+argon2_cffi         # Hash Algorithm
+Flask-Login         # Handles the login with the Auth Module
