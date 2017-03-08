@@ -7,6 +7,7 @@ Date:       MAR 03, 2017
 
 # Define the application directory
 import os
+import warnings
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))       
 
 class BaseConfig:
@@ -39,23 +40,27 @@ class BaseConfig:
      
     # Enable protection agains *Cross-site Request Forgery (CSRF)*
     CSRF_ENABLED     = True
-    CSRF_SESSION_KEY = os.environ.get("CSRF_SESSION_KEY")  # !!! SECRET !!!
+    CSRF_SESSION_KEY = os.environ.get("CSRF_SESSION_KEY")
     if not CSRF_SESSION_KEY:
-        raise RuntimeError("CSRF_SESSION_KEY not set")
+        warnings.warn("CSRF_SESSION_KEY not set", RuntimeWarning)
+        CSRF_SESSION_KEY = 'ChangeMe'
           
      # Secret key for signing cookies
-    SECRET_KEY = os.environ.get("SECRET_KEY") # !!! SECRET !!!
+    SECRET_KEY = os.environ.get("SECRET_KEY")  or 'ChangeMe'
     if not SECRET_KEY:
-        raise RuntimeError("SECRET_KEY not set")
+        warnings.warn("SECRET_KEY not set", RuntimeWarning)
+        SECRET_KEY = 'ChangeMe'
      
     # Recaptcha keys
     RECAPTCHA_USE_SSL = True
     RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY")
-    RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY") # !!! SECRET !!!
+    RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY")
     if not RECAPTCHA_PUBLIC_KEY:
-        raise RuntimeError("RECAPTCHA_PUBLIC_KEY not set")
+        warnings.warn("RECAPTCHA_PUBLIC_KEY not set", RuntimeWarning)
+        RECAPTCHA_PUBLIC_KEY = 'ChangeMe'
     if not RECAPTCHA_PRIVATE_KEY:
-        raise RuntimeError("RECAPTCHA_PRIVATE_KEY not set")
+        warnings.warn("RECAPTCHA_PRIVATE_KEY not set", RuntimeWarning)
+        RECAPTCHA_PRIVATE_KEY = 'ChangeMe'
           
 class DevConfig(BaseConfig):
     '''Dev config'''
