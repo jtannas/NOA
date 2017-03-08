@@ -3,7 +3,7 @@
 ## What is this?
 This is the 'base' front end module of the application.
 The templates and static files serve as the base layout for the rest of the application.
-It is set up like this so that the root directory of the application contains only modules.
+It is set up like this so that the root directory of the application contains only modules and shared utilities.
 Different layouts can be swapped in by swapping different layout files.
 
 ## Concept
