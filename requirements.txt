@@ -6,6 +6,7 @@ Flask-Login         # Handles the login with the Auth Module
 Flask-SSLify        # Converts all routes to HTTPS when active
 Flask-SQLAlchemy    # Flask + SQLAlchemy, Database interaction toolkit
 Flask-WTF           # Flask + WTForms, Form generation for flask
+passlib             # Required for the SQLAlchemy password type
 Sphinx              # Documentation Software
 virtualenvwrapper   # Virtual Environment Wrapper
 WTForms-Alchemy     # WTForms + SQLAlchemy, enables form creation from database tables
