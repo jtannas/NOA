@@ -1,0 +1,406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>wtforms_alchemy &#8212; NOA 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for wtforms_alchemy</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">six</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span> <span class="k">as</span> <span class="nn">sa</span>
+<span class="kn">from</span> <span class="nn">wtforms</span> <span class="k">import</span> <span class="n">Form</span>
+<span class="kn">from</span> <span class="nn">wtforms.form</span> <span class="k">import</span> <span class="n">FormMeta</span>
+<span class="kn">from</span> <span class="nn">wtforms.validators</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">DataRequired</span><span class="p">,</span>
+    <span class="n">InputRequired</span><span class="p">,</span>
+    <span class="n">Length</span><span class="p">,</span>
+    <span class="n">NumberRange</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">URL</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">wtforms_components</span> <span class="k">import</span> <span class="n">DateRange</span><span class="p">,</span> <span class="n">Email</span><span class="p">,</span> <span class="n">TimeRange</span>
+
+<span class="kn">from</span> <span class="nn">.exc</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">AttributeTypeException</span><span class="p">,</span>
+    <span class="n">InvalidAttributeException</span><span class="p">,</span>
+    <span class="n">UnknownConfigurationOption</span><span class="p">,</span>
+    <span class="n">UnknownTypeException</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.fields</span> <span class="k">import</span> <span class="p">(</span>  <span class="c1"># noqa</span>
+    <span class="n">CountryField</span><span class="p">,</span>
+    <span class="n">GroupedQuerySelectField</span><span class="p">,</span>
+    <span class="n">GroupedQuerySelectMultipleField</span><span class="p">,</span>
+    <span class="n">ModelFieldList</span><span class="p">,</span>
+    <span class="n">ModelFormField</span><span class="p">,</span>
+    <span class="n">PhoneNumberField</span><span class="p">,</span>
+    <span class="n">QuerySelectField</span><span class="p">,</span>
+    <span class="n">QuerySelectMultipleField</span><span class="p">,</span>
+    <span class="n">WeekDaysField</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.generator</span> <span class="k">import</span> <span class="n">FormGenerator</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">ClassMap</span><span class="p">,</span>
+    <span class="n">is_date_column</span><span class="p">,</span>
+    <span class="n">is_scalar</span><span class="p">,</span>
+    <span class="n">null_or_int</span><span class="p">,</span>
+    <span class="n">null_or_unicode</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.validators</span> <span class="k">import</span> <span class="n">Unique</span>  <span class="c1"># noqa</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">AttributeTypeException</span><span class="p">,</span>
+    <span class="n">CountryField</span><span class="p">,</span>
+    <span class="n">DateRange</span><span class="p">,</span>
+    <span class="n">InvalidAttributeException</span><span class="p">,</span>
+    <span class="n">ModelFieldList</span><span class="p">,</span>
+    <span class="n">ModelFormField</span><span class="p">,</span>
+    <span class="n">PhoneNumberField</span><span class="p">,</span>
+    <span class="n">Unique</span><span class="p">,</span>
+    <span class="n">UnknownTypeException</span><span class="p">,</span>
+    <span class="n">is_date_column</span><span class="p">,</span>
+    <span class="n">is_scalar</span><span class="p">,</span>
+    <span class="n">null_or_int</span><span class="p">,</span>
+    <span class="n">null_or_unicode</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.16.2&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">model_form_meta_factory</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="n">FormMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a new class usable as a metaclass for the</span>
+<span class="sd">    :func:`model_form_factory`. You only need to concern yourself with this if</span>
+<span class="sd">    you desire to have a custom metclass. Otherwise, a default class is</span>
+<span class="sd">    created and is used as a metaclass on :func:`model_form_factory`.</span>
+
+<span class="sd">    :param base: The base class to use for the meta class. This is an optional</span>
+<span class="sd">                 parameter that defaults to :class:`.FormMeta`. If you want to</span>
+<span class="sd">                 provide your own, your class must derive from this class and</span>
+<span class="sd">                 not directly from ``type``.</span>
+
+<span class="sd">    :return: A new class suitable as a metaclass for the actual model form.</span>
+<span class="sd">             Therefore, it should be passed as the ``meta`` argument to</span>
+<span class="sd">             :func:`model_form_factory`.</span>
+
+<span class="sd">    Example usage:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        from wtforms.form import FormMeta</span>
+
+
+<span class="sd">        class MyModelFormMeta(FormMeta):</span>
+<span class="sd">            # do some metaclass magic here</span>
+<span class="sd">            pass</span>
+
+<span class="sd">        ModelFormMeta = model_form_meta_factory(MyModelFormMeta)</span>
+<span class="sd">        ModelForm = model_form_factory(meta=ModelFormMeta)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">ModelFormMeta</span><span class="p">(</span><span class="n">base</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Meta class that overrides WTForms base meta class. The primary purpose</span>
+<span class="sd">        of this class is allowing ModelForms use special configuration params</span>
+<span class="sd">        under the &#39;Meta&#39; class namespace.</span>
+
+<span class="sd">        ModelForm classes inherit parent&#39;s Meta class properties.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">bases</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">class_</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;Meta&#39;</span> <span class="ow">in</span> <span class="n">class_</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
+                    <span class="n">bases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="s1">&#39;Meta&#39;</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="nb">object</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">bases</span><span class="p">:</span>
+                <span class="n">bases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+
+            <span class="bp">cls</span><span class="o">.</span><span class="n">Meta</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;Meta&#39;</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">bases</span><span class="p">),</span> <span class="p">{})</span>
+
+            <span class="n">base</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">Meta</span><span class="p">,</span> <span class="s1">&#39;model&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">cls</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
+                <span class="n">generator</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">form_generator</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+                <span class="n">generator</span><span class="o">.</span><span class="n">create_form</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ModelFormMeta</span>
+
+
+<span class="n">ModelFormMeta</span> <span class="o">=</span> <span class="n">model_form_meta_factory</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">model_form_factory</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="n">Form</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">ModelFormMeta</span><span class="p">,</span> <span class="o">**</span><span class="n">defaults</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a base class for all model forms to derive from.</span>
+
+<span class="sd">    :param base: Class that should be used as a base for the returned class.</span>
+<span class="sd">                 By default, this is WTForms&#39;s base class</span>
+<span class="sd">                 :class:`wtforms.Form`.</span>
+
+<span class="sd">    :param meta: A metaclass to use on this class. Normally, you do not need to</span>
+<span class="sd">                 provide this value, but if you want, you should check out</span>
+<span class="sd">                 :func:`model_form_meta_factory`.</span>
+
+<span class="sd">    :return: A class to be used as the base class for all forms that should be</span>
+<span class="sd">             connected to a SQLAlchemy model class.</span>
+
+<span class="sd">    Additional arguments provided to the form override the default</span>
+<span class="sd">    configuration as described in :ref:`custom_base`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">ModelForm</span><span class="p">(</span><span class="n">six</span><span class="o">.</span><span class="n">with_metaclass</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">base</span><span class="p">)):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Standard base-class for all forms to be combined with a model. Use</span>
+<span class="sd">        :func:`model_form_factory` in case you wish to change its behavior.</span>
+
+<span class="sd">        ``get_session``: If you want to use the Unique validator, you should</span>
+<span class="sd">        define this method. If you are using Flask-SQLAlchemy along with</span>
+<span class="sd">        WTForms-Alchemy you don&#39;t need to set this. If you define this in the</span>
+<span class="sd">        superclass, it will not be overriden.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">&#39;get_session&#39;</span><span class="p">):</span>
+            <span class="n">get_session</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="n">default</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="c1">#: Whether or not to skip unknown types. If this is set to True,</span>
+            <span class="c1">#: fields with types that are not present in FormGenerator type map</span>
+            <span class="c1">#: will be silently excluded from the generated form.</span>
+            <span class="c1">#:</span>
+            <span class="c1">#: By default this is set to False, meaning unknown types throw</span>
+            <span class="c1">#: exceptions when encountered.</span>
+            <span class="n">skip_unknown_types</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;skip_unknown_types&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+            <span class="c1">#: Whether or not to assign all fields as optional, useful when</span>
+            <span class="c1">#: creating update forms for patch requests</span>
+            <span class="n">all_fields_optional</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;all_fields_optional&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+            <span class="n">validators</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;validators&#39;</span><span class="p">,</span> <span class="p">{})</span>
+
+            <span class="c1">#: A dict with keys as field names and values as field arguments.</span>
+            <span class="n">field_args</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;field_args&#39;</span><span class="p">,</span> <span class="p">{})</span>
+
+            <span class="c1">#: A dict with keys as field names and values as widget options.</span>
+            <span class="n">widget_options</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;widget_options&#39;</span><span class="p">,</span> <span class="p">{})</span>
+
+            <span class="c1">#: Whether or not to include only indexed fields.</span>
+            <span class="n">only_indexed_fields</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;only_indexed_fields&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+            <span class="c1">#: Whether or not to include primary keys.</span>
+            <span class="n">include_primary_keys</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;include_primary_keys&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+            <span class="c1">#: Whether or not to include foreign keys. By default this is False</span>
+            <span class="c1">#: indicating that foreign keys are not included in the generated</span>
+            <span class="c1">#: form.</span>
+            <span class="n">include_foreign_keys</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;include_foreign_keys&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+            <span class="c1">#: Whether or not to strip string fields</span>
+            <span class="n">strip_string_fields</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;strip_string_fields&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+            <span class="c1">#: Whether or not to include datetime columns that have a default</span>
+            <span class="c1">#: value. A good example is created_at column which has a default</span>
+            <span class="c1">#: value of datetime.utcnow.</span>
+            <span class="n">include_datetimes_with_default</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span>
+                <span class="s1">&#39;include_datetimes_with_default&#39;</span><span class="p">,</span> <span class="kc">False</span>
+            <span class="p">)</span>
+
+            <span class="c1">#: The default validator to be used for not nullable columns. Set</span>
+            <span class="c1">#: this to `None` if you wish to disable it.</span>
+            <span class="n">not_null_validator</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span>
+                <span class="s1">&#39;not_null_validator&#39;</span><span class="p">,</span>
+                <span class="n">InputRequired</span><span class="p">()</span>
+            <span class="p">)</span>
+
+            <span class="c1">#: A dictionary that overrides not null validation on type level.</span>
+            <span class="c1">#: Keys should be valid SQLAlchemy types and values should be valid</span>
+            <span class="c1">#: WTForms validators.</span>
+            <span class="n">not_null_validator_type_map</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span>
+                <span class="s1">&#39;not_null_validator_type_map&#39;</span><span class="p">,</span>
+                <span class="n">ClassMap</span><span class="p">(</span>
+                    <span class="p">[(</span><span class="n">sa</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="p">[</span><span class="n">InputRequired</span><span class="p">(),</span> <span class="n">DataRequired</span><span class="p">()])]</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="c1">#: Default email validator</span>
+            <span class="n">email_validator</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;email_validator&#39;</span><span class="p">,</span> <span class="n">Email</span><span class="p">)</span>
+
+            <span class="c1">#: Default length validator</span>
+            <span class="n">length_validator</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;length_validator&#39;</span><span class="p">,</span> <span class="n">Length</span><span class="p">)</span>
+
+            <span class="c1">#: Default unique validator</span>
+            <span class="n">unique_validator</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;unique_validator&#39;</span><span class="p">,</span> <span class="n">Unique</span><span class="p">)</span>
+
+            <span class="c1">#: Default number range validator</span>
+            <span class="n">number_range_validator</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span>
+                <span class="s1">&#39;number_range_validator&#39;</span><span class="p">,</span> <span class="n">NumberRange</span>
+            <span class="p">)</span>
+
+            <span class="c1">#: Default date range validator</span>
+            <span class="n">date_range_validator</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span>
+                <span class="s1">&#39;date_range_validator&#39;</span><span class="p">,</span> <span class="n">DateRange</span>
+            <span class="p">)</span>
+
+            <span class="c1">#: Default time range validator</span>
+            <span class="n">time_range_validator</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span>
+                <span class="s1">&#39;time_range_validator&#39;</span><span class="p">,</span> <span class="n">TimeRange</span>
+            <span class="p">)</span>
+
+            <span class="c1">#: Default optional validator</span>
+            <span class="n">optional_validator</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span>
+                <span class="s1">&#39;optional_validator&#39;</span><span class="p">,</span> <span class="n">Optional</span>
+            <span class="p">)</span>
+
+            <span class="c1">#: Default URL validator</span>
+            <span class="n">url_validator</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;url_validator&#39;</span><span class="p">,</span> <span class="n">URL</span><span class="p">)</span>
+
+            <span class="c1">#: Which form generator to use. Only override this if you have a</span>
+            <span class="c1">#: valid form generator which you want to use instead of the</span>
+            <span class="c1">#: default one.</span>
+            <span class="n">form_generator</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span>
+                <span class="s1">&#39;form_generator&#39;</span><span class="p">,</span> <span class="n">FormGenerator</span>
+            <span class="p">)</span>
+
+            <span class="c1">#: Default date format</span>
+            <span class="n">date_format</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;date_format&#39;</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+
+            <span class="c1">#: Default datetime format</span>
+            <span class="n">datetime_format</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span>
+                <span class="s1">&#39;datetime_format&#39;</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span>
+            <span class="p">)</span>
+
+            <span class="c1">#: Dictionary of SQLAlchemy types as keys and WTForms field classes</span>
+            <span class="c1">#: as values. The key value pairs of this dictionary override</span>
+            <span class="c1">#: the key value pairs of FormGenerator.TYPE_MAP.</span>
+            <span class="c1">#:</span>
+            <span class="c1">#: Using this configuration option one can easily configure the</span>
+            <span class="c1">#: type conversion in class level.</span>
+            <span class="n">type_map</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;type_map&#39;</span><span class="p">,</span> <span class="n">ClassMap</span><span class="p">())</span>
+
+            <span class="c1">#: Whether or not to raise InvalidAttributExceptions when invalid</span>
+            <span class="c1">#: attribute names are given for include / exclude or only</span>
+            <span class="n">attr_errors</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;attr_errors&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+            <span class="c1">#: Additional fields to include in the generated form.</span>
+            <span class="n">include</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;include&#39;</span><span class="p">,</span> <span class="p">[])</span>
+
+            <span class="c1">#: List of fields to exclude from the generated form.</span>
+            <span class="n">exclude</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;exclude&#39;</span><span class="p">,</span> <span class="p">[])</span>
+
+            <span class="c1">#: List of fields to only include in the generated form.</span>
+            <span class="n">only</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;only&#39;</span><span class="p">,</span> <span class="p">[])</span>
+
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Sets object as form attribute.&quot;&quot;&quot;</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;obj&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">ModelForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">defaults</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">UnknownConfigurationOption</span><span class="p">(</span>
+            <span class="nb">list</span><span class="p">(</span><span class="n">defaults</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ModelForm</span>
+
+
+<span class="n">ModelForm</span> <span class="o">=</span> <span class="n">model_form_factory</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">ModelCreateForm</span><span class="p">(</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">ModelUpdateForm</span><span class="p">(</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="n">all_fields_optional</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">assign_required</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="k">class</span> <span class="nc">ModelSearchForm</span><span class="p">(</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="n">all_fields_optional</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">only_indexed_fields</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">include_primary_keys</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Joel Tannas.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

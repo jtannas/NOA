@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>app.mod_auth package &#8212; NOA 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="app-mod-auth-package">
+<h1>app.mod_auth package<a class="headerlink" href="#app-mod-auth-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-app.mod_auth.controllers">
+<span id="app-mod-auth-controllers-module"></span><h2>app.mod_auth.controllers module<a class="headerlink" href="#module-app.mod_auth.controllers" title="Permalink to this headline">¶</a></h2>
+<p>Desc.:      The business logic for the auth module
+Purpose:    Controlling the server side behaviour of the pages
+Author:     Joel Tannas
+Date:       MAR 03, 2017</p>
+<dl class="function">
+<dt id="app.mod_auth.controllers.load_user">
+<code class="descclassname">app.mod_auth.controllers.</code><code class="descname">load_user</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/mod_auth/controllers.html#load_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.mod_auth.controllers.load_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the user for a given user id</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.mod_auth.controllers.signin">
+<code class="descclassname">app.mod_auth.controllers.</code><code class="descname">signin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/mod_auth/controllers.html#signin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.mod_auth.controllers.signin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sign-In page for the user</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.mod_auth.controllers.signout">
+<code class="descclassname">app.mod_auth.controllers.</code><code class="descname">signout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/mod_auth/controllers.html#signout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.mod_auth.controllers.signout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log out route</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.mod_auth.controllers.signup">
+<code class="descclassname">app.mod_auth.controllers.</code><code class="descname">signup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/mod_auth/controllers.html#signup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.mod_auth.controllers.signup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registration page for new users</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-app.mod_auth.forms">
+<span id="app-mod-auth-forms-module"></span><h2>app.mod_auth.forms module<a class="headerlink" href="#module-app.mod_auth.forms" title="Permalink to this headline">¶</a></h2>
+<p>Desc.:      Form definitions using WTForms-Alchemy
+Purpose:    ^
+Author:     Joel Tannas
+Date:       MAR 03, 2017</p>
+<dl class="class">
+<dt id="app.mod_auth.forms.LoginForm">
+<em class="property">class </em><code class="descclassname">app.mod_auth.forms.</code><code class="descname">LoginForm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/mod_auth/forms.html#LoginForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.mod_auth.forms.LoginForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="app.html#app.utils.ModelForm" title="app.utils.ModelForm"><code class="xref py py-class docutils literal"><span class="pre">app.utils.ModelForm</span></code></a></p>
+<p>User Login Form</p>
+<dl class="class">
+<dt id="app.mod_auth.forms.LoginForm.Meta">
+<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#app.mod_auth.forms.LoginForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">app.mod_auth.forms.Meta</span></code>, <code class="xref py py-class docutils literal"><span class="pre">wtforms_alchemy.Meta</span></code>, <code class="xref py py-class docutils literal"><span class="pre">wtforms_alchemy.Meta</span></code>, <code class="xref py py-class docutils literal"><span class="pre">wtforms_alchemy.Meta</span></code>, <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.Meta</span></code>, <code class="xref py py-class docutils literal"><span class="pre">wtforms.meta.DefaultMeta</span></code>, <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="app.mod_auth.forms.LoginForm.email">
+<code class="descclassname">LoginForm.</code><code class="descname">email</code><em class="property"> = &lt;UnboundField(StringField, (), {'filters': [], 'validators': [&lt;wtforms.validators.InputRequired object&gt;, &lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.Length object&gt;, &lt;wtforms.validators.Email object&gt;], 'default': None, 'widget': None, 'label': 'email', 'description': ''})&gt;</em><a class="headerlink" href="#app.mod_auth.forms.LoginForm.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.mod_auth.forms.LoginForm.password">
+<code class="descclassname">LoginForm.</code><code class="descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, (), {'filters': [], 'validators': [&lt;wtforms.validators.InputRequired object&gt;, &lt;wtforms.validators.Regexp object&gt;], 'default': None, 'widget': None, 'label': 'password', 'description': ''})&gt;</em><a class="headerlink" href="#app.mod_auth.forms.LoginForm.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="app.mod_auth.forms.RegistrationForm">
+<em class="property">class </em><code class="descclassname">app.mod_auth.forms.</code><code class="descname">RegistrationForm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/mod_auth/forms.html#RegistrationForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.mod_auth.forms.RegistrationForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="app.html#app.utils.ModelForm" title="app.utils.ModelForm"><code class="xref py py-class docutils literal"><span class="pre">app.utils.ModelForm</span></code></a></p>
+<p>User Registration Form</p>
+<dl class="class">
+<dt id="app.mod_auth.forms.RegistrationForm.Meta">
+<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#app.mod_auth.forms.RegistrationForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">app.mod_auth.forms.Meta</span></code>, <code class="xref py py-class docutils literal"><span class="pre">wtforms_alchemy.Meta</span></code>, <code class="xref py py-class docutils literal"><span class="pre">wtforms_alchemy.Meta</span></code>, <code class="xref py py-class docutils literal"><span class="pre">wtforms_alchemy.Meta</span></code>, <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.Meta</span></code>, <code class="xref py py-class docutils literal"><span class="pre">wtforms.meta.DefaultMeta</span></code>, <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="app.mod_auth.forms.RegistrationForm.accept_tos">
+<code class="descclassname">RegistrationForm.</code><code class="descname">accept_tos</code><em class="property"> = &lt;UnboundField(BooleanField, ('I accept the Terms of Service', [&lt;wtforms.validators.Required object&gt;]), {})&gt;</em><a class="headerlink" href="#app.mod_auth.forms.RegistrationForm.accept_tos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.mod_auth.forms.RegistrationForm.confirm">
+<code class="descclassname">RegistrationForm.</code><code class="descname">confirm</code><em class="property"> = &lt;UnboundField(PasswordField, ('Repeat Password', [&lt;wtforms.validators.Required object&gt;, &lt;wtforms.validators.EqualTo object&gt;]), {})&gt;</em><a class="headerlink" href="#app.mod_auth.forms.RegistrationForm.confirm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.mod_auth.forms.RegistrationForm.email">
+<code class="descclassname">RegistrationForm.</code><code class="descname">email</code><em class="property"> = &lt;UnboundField(StringField, (), {'filters': [], 'validators': [&lt;wtforms.validators.InputRequired object&gt;, &lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.Length object&gt;, &lt;wtforms_alchemy.validators.Unique object&gt;, &lt;wtforms.validators.Email object&gt;], 'default': None, 'widget': None, 'label': 'email', 'description': ''})&gt;</em><a class="headerlink" href="#app.mod_auth.forms.RegistrationForm.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.mod_auth.forms.RegistrationForm.name">
+<code class="descclassname">RegistrationForm.</code><code class="descname">name</code><em class="property"> = &lt;UnboundField(StringField, (), {'filters': [], 'validators': [&lt;wtforms.validators.InputRequired object&gt;, &lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.Length object&gt;], 'default': None, 'widget': None, 'label': 'name', 'description': ''})&gt;</em><a class="headerlink" href="#app.mod_auth.forms.RegistrationForm.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.mod_auth.forms.RegistrationForm.password">
+<code class="descclassname">RegistrationForm.</code><code class="descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, (), {'filters': [], 'validators': [&lt;wtforms.validators.InputRequired object&gt;, &lt;wtforms.validators.Regexp object&gt;], 'default': None, 'widget': None, 'label': 'password', 'description': ''})&gt;</em><a class="headerlink" href="#app.mod_auth.forms.RegistrationForm.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.mod_auth.forms.RegistrationForm.recaptcha">
+<code class="descclassname">RegistrationForm.</code><code class="descname">recaptcha</code><em class="property"> = &lt;UnboundField(RecaptchaField, (), {})&gt;</em><a class="headerlink" href="#app.mod_auth.forms.RegistrationForm.recaptcha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-app.mod_auth.models">
+<span id="app-mod-auth-models-module"></span><h2>app.mod_auth.models module<a class="headerlink" href="#module-app.mod_auth.models" title="Permalink to this headline">¶</a></h2>
+<p>Desc.:      Database models for the auth module
+Purpose:    Defines the user tables
+Author:     Joel Tannas
+Date:       MAR 03, 2017</p>
+<dl class="class">
+<dt id="app.mod_auth.models.User">
+<em class="property">class </em><code class="descclassname">app.mod_auth.models.</code><code class="descname">User</code><span class="sig-paren">(</span><em>name</em>, <em>email</em>, <em>password</em>, <em>role=0</em>, <em>status=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/mod_auth/models.html#User"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.mod_auth.models.User" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="app.html#app.utils.ModelTable" title="app.utils.ModelTable"><code class="xref py py-class docutils literal"><span class="pre">app.utils.ModelTable</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">flask_login.mixins.UserMixin</span></code></p>
+<p>SQLAlchemy User table definition</p>
+<dl class="attribute">
+<dt id="app.mod_auth.models.User.date_created">
+<code class="descname">date_created</code><a class="headerlink" href="#app.mod_auth.models.User.date_created" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.mod_auth.models.User.date_modified">
+<code class="descname">date_modified</code><a class="headerlink" href="#app.mod_auth.models.User.date_modified" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.mod_auth.models.User.email">
+<code class="descname">email</code><a class="headerlink" href="#app.mod_auth.models.User.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.mod_auth.models.User.id">
+<code class="descname">id</code><a class="headerlink" href="#app.mod_auth.models.User.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.mod_auth.models.User.name">
+<code class="descname">name</code><a class="headerlink" href="#app.mod_auth.models.User.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.mod_auth.models.User.password">
+<code class="descname">password</code><a class="headerlink" href="#app.mod_auth.models.User.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.mod_auth.models.User.role">
+<code class="descname">role</code><a class="headerlink" href="#app.mod_auth.models.User.role" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="app.mod_auth.models.User.status">
+<code class="descname">status</code><a class="headerlink" href="#app.mod_auth.models.User.status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-app.mod_auth">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-app.mod_auth" title="Permalink to this headline">¶</a></h2>
+<p>Desc.:      Initiation procedure for the auth module
+Purpose:    Creating and Configuring the auth pre-run
+Author:     Joel Tannas
+Date:       MAR 06, 2017</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">app.mod_auth package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-app.mod_auth.controllers">app.mod_auth.controllers module</a></li>
+<li><a class="reference internal" href="#module-app.mod_auth.forms">app.mod_auth.forms module</a></li>
+<li><a class="reference internal" href="#module-app.mod_auth.models">app.mod_auth.models module</a></li>
+<li><a class="reference internal" href="#module-app.mod_auth">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/app.mod_auth.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Joel Tannas.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/app.mod_auth.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
