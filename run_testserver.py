@@ -1,13 +1,16 @@
-'''
-Desc.:      Runs the test server
-Purpose:    Testing the website on a localhost
-Author:     Joel Tannas
-Date:       MAR 03, 2017
+''' Runs a test server using the built in web server - Not suitable to deploy
+
+This script runs the flask server. While suitable for development, it can only
+handle one request at a time. It isn't enough for a full-scale deployment.
+See: http://flask.pocoo.org/docs/0.12/api/#application-object
 '''
 from app import app
 
 def main():
+    ''' Runs the built-in flask server '''
+    
     ssl_context = None
+    ''' This points to the SSL certs to run with https '''
     # ssl_context = ('./cert.crt', './key.key')
         # Cloud9 does not support self-signed dev certs
     

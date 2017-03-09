@@ -59,12 +59,15 @@
 <span class="c1"># ---------------------------------------------------------------------------</span>
 <span class="c1"># Define a method for checking the safety of redirects</span>
 <span class="c1"># ---------------------------------------------------------------------------</span>
-<div class="viewcode-block" id="is_safe_url"><a class="viewcode-back" href="../../app.html#app.utils.is_safe_url">[docs]</a><span class="k">def</span> <span class="nf">is_safe_url</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
+<div class="viewcode-block" id="is_safe_url"><a class="viewcode-back" href="../../app.html#app.utils.is_safe_url">[docs]</a><span class="k">def</span> <span class="nf">is_safe_url</span><span class="p">(</span><span class="n">target_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39; Check to see if a URL redirects within the website</span>
-<span class="sd">    by http://flask.pocoo.org/snippets/62/</span>
+<span class="sd">    </span>
+<span class="sd">    Code written by http://flask.pocoo.org/snippets/62/</span>
+<span class="sd">    </span>
+<span class="sd">    It is intended to prevent open redirects</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">ref_url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">host_url</span><span class="p">)</span>
-    <span class="n">test_url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">urljoin</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">host_url</span><span class="p">,</span> <span class="n">target</span><span class="p">))</span>
+    <span class="n">test_url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">urljoin</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">host_url</span><span class="p">,</span> <span class="n">target_url</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">test_url</span><span class="o">.</span><span class="n">scheme</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">,</span> <span class="s1">&#39;https&#39;</span><span class="p">)</span> <span class="ow">and</span> \
            <span class="n">ref_url</span><span class="o">.</span><span class="n">netloc</span> <span class="o">==</span> <span class="n">test_url</span><span class="o">.</span><span class="n">netloc</span></div>
 
@@ -76,10 +79,10 @@
 <span class="n">BaseModelForm</span> <span class="o">=</span> <span class="n">model_form_factory</span><span class="p">(</span><span class="n">Form</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ModelForm"><a class="viewcode-back" href="../../app.html#app.utils.ModelForm">[docs]</a><span class="k">class</span> <span class="nc">ModelForm</span><span class="p">(</span><span class="n">BaseModelForm</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; Base model WTForm to build others off of&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39; Base model WTForm to build others off of.&#39;&#39;&#39;</span>
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="ModelForm.get_session"><a class="viewcode-back" href="../../app.html#app.utils.ModelForm.get_session">[docs]</a>    <span class="k">def</span> <span class="nf">get_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">session</span></div></div>
+    <span class="k">def</span> <span class="nf">get_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">session</span></div>
 
 <span class="c1"># ---------------------------------------------------------------------------</span>
 <span class="c1"># Build a model tabledef for the rest of the database table to inherit</span>

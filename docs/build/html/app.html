@@ -68,7 +68,7 @@
 </div>
 <div class="section" id="module-app.utils">
 <span id="app-utils-module"></span><h2>app.utils module<a class="headerlink" href="#module-app.utils" title="Permalink to this headline">¶</a></h2>
-<p>Desc.:      Non-module specific classes and methods 
+<p>Desc.:      Non-module specific classes and methods
 Purpose:    Useful utilities to make like easier when coding other modules
 Author:     Joel Tannas
 Date:       MAR 07, 2017</p>
@@ -76,18 +76,7 @@ Date:       MAR 07, 2017</p>
 <dt id="app.utils.ModelForm">
 <em class="property">class </em><code class="descclassname">app.utils.</code><code class="descname">ModelForm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/utils.html#ModelForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.utils.ModelForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">wtforms_alchemy.ModelForm</span></code></p>
-<p>Base model WTForm to build others off of</p>
-<dl class="class">
-<dt id="app.utils.ModelForm.Meta">
-<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#app.utils.ModelForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">wtforms_alchemy.Meta</span></code>, <code class="xref py py-class docutils literal"><span class="pre">wtforms_alchemy.Meta</span></code>, <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.Meta</span></code>, <code class="xref py py-class docutils literal"><span class="pre">wtforms.meta.DefaultMeta</span></code>, <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="app.utils.ModelForm.get_session">
-<em class="property">classmethod </em><code class="descclassname">ModelForm.</code><code class="descname">get_session</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/utils.html#ModelForm.get_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.utils.ModelForm.get_session" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<p>Base model WTForm to build others off of.</p>
 </dd></dl>
 
 <dl class="class">
@@ -95,37 +84,57 @@ Date:       MAR 07, 2017</p>
 <em class="property">class </em><code class="descclassname">app.utils.</code><code class="descname">ModelTable</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/utils.html#ModelTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.utils.ModelTable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_sqlalchemy.Model</span></code></p>
 <p>Base model tabledef to build others off of</p>
-<dl class="attribute">
-<dt id="app.utils.ModelTable.date_created">
-<code class="descname">date_created</code><em class="property"> = Column(None, DateTime(), table=None, default=ColumnDefault(&lt;sqlalchemy.sql.functions.current_timestamp at 0x2b577907ee48; current_timestamp&gt;))</em><a class="headerlink" href="#app.utils.ModelTable.date_created" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="app.utils.ModelTable.date_modified">
-<code class="descname">date_modified</code><em class="property"> = Column(None, DateTime(), table=None, onupdate=ColumnDefault(&lt;sqlalchemy.sql.functions.current_timestamp at 0x2b5779097160; current_timestamp&gt;), default=ColumnDefault(&lt;sqlalchemy.sql.functions.current_timestamp at 0x2b5779097080; current_timestamp&gt;))</em><a class="headerlink" href="#app.utils.ModelTable.date_modified" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="app.utils.ModelTable.id">
-<code class="descname">id</code><em class="property"> = Column(None, Integer(), table=None, primary_key=True, nullable=False)</em><a class="headerlink" href="#app.utils.ModelTable.id" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="function">
 <dt id="app.utils.is_safe_url">
-<code class="descclassname">app.utils.</code><code class="descname">is_safe_url</code><span class="sig-paren">(</span><em>target</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/utils.html#is_safe_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.utils.is_safe_url" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check to see if a URL redirects within the website
-by <a class="reference external" href="http://flask.pocoo.org/snippets/62/">http://flask.pocoo.org/snippets/62/</a></p>
+<code class="descclassname">app.utils.</code><code class="descname">is_safe_url</code><span class="sig-paren">(</span><em>target_url: str</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/app/utils.html#is_safe_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.utils.is_safe_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check to see if a URL redirects within the website</p>
+<p>Code written by <a class="reference external" href="http://flask.pocoo.org/snippets/62/">http://flask.pocoo.org/snippets/62/</a></p>
+<p>It is intended to prevent open redirects</p>
 </dd></dl>
 
 </div>
 <div class="section" id="module-app">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-app" title="Permalink to this headline">¶</a></h2>
-<p>Desc.:      Initiation procedure for the application object
-Purpose:    Creating and Configuring the app pre-run
-Author:     Joel Tannas
-Date:       MAR 03, 2017</p>
+<p>The Flask Application __init__ file</p>
+<p>This file initiates and configures the flask application.
+Ideally, it contains only configurations and objects that are relevant to
+the entire application (eg. HTTP error handling).</p>
+<p>The reason behind this minimalism is that this flask application uses a
+modular structrure based on blueprints.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">See [Flask&#8217;s explanation](<a class="reference external" href="http://flask.pocoo.org/docs/0.12/blueprints/">http://flask.pocoo.org/docs/0.12/blueprints/</a>) for
+details.</p>
+</div>
+<p>The benefit of this is that websites can be extended by dropping in new code
+modules, with the only application level work being registering them within
+this file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><ul class="first last simple">
+<li>Configures the application</li>
+<li>Defines the db (database object) using SQLAlchemy</li>
+<li>Prevents caching in debug mode</li>
+<li>Converts all pages to https (when out of debug mode)</li>
+<li>Protects against Cross Site Request Forgery (CSRF)</li>
+<li>Sets the error handling methods for HTTP errors</li>
+<li>Registers application blueprints to extend the application</li>
+<li>Creates the database tables (if needed) (depends on blueprint models)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<ul class="last simple">
+<li>Add in configuration from an instance folder</li>
+</ul>
+</div>
 <dl class="function">
 <dt id="app.after_request">
 <code class="descclassname">app.</code><code class="descname">after_request</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#after_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.after_request" title="Permalink to this definition">¶</a></dt>
@@ -139,9 +148,20 @@ Date:       MAR 03, 2017</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="app.internal_error">
+<code class="descclassname">app.</code><code class="descname">internal_error</code><span class="sig-paren">(</span><em>error</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#internal_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.internal_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>500 HTTP Internal Server Error Handler Function</p>
+<p>Handles 500 HTTP Internal Server Error Function
+Rolls back any (possibly erroneous) uncommitted database session changes,
+then renders the 500 template page.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="app.not_found">
 <code class="descclassname">app.</code><code class="descname">not_found</code><span class="sig-paren">(</span><em>error</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#not_found"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.not_found" title="Permalink to this definition">¶</a></dt>
-<dd><p>404 Error Handler Function</p>
+<dd><p>404 HTTP Error Handler Function</p>
+<p>Handles 404 HTTP Errors.
+Renders a 404 template page.</p>
 </dd></dl>
 
 </div>

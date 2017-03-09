@@ -1,12 +1,23 @@
-argon2_cffi         # Hash Algorithm
+# Baseline requirements
 Flask               # App Foundation
 Flask-debugtoolbar  # Injected debugging toolbar for app debug mode
 Flask-JSGlue        # Enables Flask commands in Javascript
-Flask-Login         # Handles the login with the Auth Module
 Flask-SSLify        # Converts all routes to HTTPS when active
 Flask-SQLAlchemy    # Flask + SQLAlchemy, Database interaction toolkit
 Flask-WTF           # Flask + WTForms, Form generation for flask
-passlib             # Required for the SQLAlchemy password type
-Sphinx              # Documentation Software
 virtualenvwrapper   # Virtual Environment Wrapper
 WTForms-Alchemy     # WTForms + SQLAlchemy, enables form creation from database tables
+
+
+# Documentation requirements
+ 
+ 
+# mod_auth requirements
+argon2_cffi         # Hash Algorithm
+Flask-Login         # Handles the login with the Auth Module
+passlib             # Required for the SQLAlchemy password type
+
+
+# mod_legal requirements
+Sphinx              # Documentation Software
+sphinxcontrib-napoleon  # Sphinx extension - allows different styles of docstrings

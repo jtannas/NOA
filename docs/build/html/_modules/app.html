@@ -43,11 +43,35 @@
           <div class="body" role="main">
             
   <h1>Source code for app</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Desc.:      Initiation procedure for the application object</span>
-<span class="sd">Purpose:    Creating and Configuring the app pre-run</span>
-<span class="sd">Author:     Joel Tannas</span>
-<span class="sd">Date:       MAR 03, 2017</span>
+<span></span><span class="sd">&#39;&#39;&#39; The Flask Application __init__ file</span>
+
+<span class="sd">This file initiates and configures the flask application.</span>
+<span class="sd">Ideally, it contains only configurations and objects that are relevant to </span>
+<span class="sd">the entire application (eg. HTTP error handling).</span>
+
+<span class="sd">The reason behind this minimalism is that this flask application uses a</span>
+<span class="sd">modular structrure based on blueprints.</span>
+
+<span class="sd">Note:</span>
+<span class="sd">    See [Flask&#39;s explanation](http://flask.pocoo.org/docs/0.12/blueprints/) for</span>
+<span class="sd">    details.</span>
+
+<span class="sd">The benefit of this is that websites can be extended by dropping in new code</span>
+<span class="sd">modules, with the only application level work being registering them within</span>
+<span class="sd">this file.</span>
+
+<span class="sd">Yields:</span>
+<span class="sd">    - Configures the application</span>
+<span class="sd">    - Defines the db (database object) using SQLAlchemy</span>
+<span class="sd">    - Prevents caching in debug mode</span>
+<span class="sd">    - Converts all pages to https (when out of debug mode)</span>
+<span class="sd">    - Protects against Cross Site Request Forgery (CSRF)</span>
+<span class="sd">    - Sets the error handling methods for HTTP errors</span>
+<span class="sd">    - Registers application blueprints to extend the application </span>
+<span class="sd">    - Creates the database tables (if needed) (depends on blueprint models)</span>
+
+<span class="sd">Todo:</span>
+<span class="sd">    * Add in configuration from an instance folder</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="c1"># ---------------------------------------------------------------------------</span>
@@ -64,8 +88,6 @@
 <span class="c1"># ---------------------------------------------------------------------------</span>
 <span class="c1"># Define &amp; Configure the WSGI application object</span>
 <span class="c1"># ---------------------------------------------------------------------------</span>
-
-<span class="c1"># Define and Config</span>
 <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">config</span> <span class="k">import</span> <span class="o">*</span>
 <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_object</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;dev&#39;</span><span class="p">])</span>
@@ -82,6 +104,11 @@
         <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Expires&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Pragma&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;no-cache&quot;</span>
         <span class="k">return</span> <span class="n">response</span></div>
+        
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Define the database object (to be extended by modules and controllers)</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">SQLAlchemy</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
 
 <span class="c1"># ---------------------------------------------------------------------------</span>
 <span class="c1"># SSLify the application for https (only valid when app.debug = false)</span>
@@ -96,6 +123,7 @@
 <span class="nd">@app</span><span class="o">.</span><span class="n">errorhandler</span><span class="p">(</span><span class="n">CSRFError</span><span class="p">)</span>
 <div class="viewcode-block" id="handle_csrf_error"><a class="viewcode-back" href="../app.html#app.handle_csrf_error">[docs]</a><span class="k">def</span> <span class="nf">handle_csrf_error</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Handle Cross Site Scripting Errors &#39;&#39;&#39;</span>
+    
     <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;csrf_error.html&#39;</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">description</span><span class="p">),</span> <span class="mi">400</span></div>
 
 <span class="c1"># ---------------------------------------------------------------------------</span>
@@ -103,13 +131,23 @@
 <span class="c1"># ---------------------------------------------------------------------------</span>
 <span class="nd">@app</span><span class="o">.</span><span class="n">errorhandler</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
 <div class="viewcode-block" id="not_found"><a class="viewcode-back" href="../app.html#app.not_found">[docs]</a><span class="k">def</span> <span class="nf">not_found</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; 404 Error Handler Function &#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39; 404 HTTP Error Handler Function </span>
+<span class="sd">    </span>
+<span class="sd">    Handles 404 HTTP Errors.</span>
+<span class="sd">    Renders a 404 template page.&#39;&#39;&#39;</span>
+    
     <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;404.html&#39;</span><span class="p">),</span> <span class="mi">404</span></div>
 
-<span class="c1"># ---------------------------------------------------------------------------</span>
-<span class="c1"># Define the database object (to be extended by modules and controllers)</span>
-<span class="c1"># ---------------------------------------------------------------------------</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">SQLAlchemy</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+<span class="nd">@app</span><span class="o">.</span><span class="n">errorhandler</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<div class="viewcode-block" id="internal_error"><a class="viewcode-back" href="../app.html#app.internal_error">[docs]</a><span class="k">def</span> <span class="nf">internal_error</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; 500 HTTP Internal Server Error Handler Function </span>
+<span class="sd">    </span>
+<span class="sd">    Handles 500 HTTP Internal Server Error Function</span>
+<span class="sd">    Rolls back any (possibly erroneous) uncommitted database session changes,</span>
+<span class="sd">    then renders the 500 template page.&#39;&#39;&#39;</span>
+    
+    <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;500.html&#39;</span><span class="p">),</span> <span class="mi">500</span></div>
 
 <span class="c1"># ---------------------------------------------------------------------------</span>
 <span class="c1"># Import a module / component using its blueprint handler then register</span>
@@ -119,13 +157,13 @@
 <span class="kn">from</span> <span class="nn">app.basemod.controllers</span> <span class="k">import</span> <span class="n">mod_base</span> <span class="k">as</span> <span class="n">base_module</span>
 <span class="kn">from</span> <span class="nn">app.mod_auth.controllers</span> <span class="k">import</span> <span class="n">mod_auth</span> <span class="k">as</span> <span class="n">auth_module</span>
 <span class="c1">#from app.mod_xyz.controllers import mod_xyz as xyz_module</span>
-<span class="c1"># ..</span>
+<span class="c1"># ...</span>
 
 <span class="c1"># -- Register the website modules</span>
 <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">base_module</span><span class="p">)</span>
 <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">auth_module</span><span class="p">)</span>
 <span class="c1"># app.register_blueprint(xyz_module)</span>
-<span class="c1"># ..</span>
+<span class="c1"># ...</span>
 
 <span class="c1"># ---------------------------------------------------------------------------</span>
 <span class="c1"># Build the database using SQLAlchemy from registered blueprints</span>

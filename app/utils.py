@@ -14,12 +14,15 @@ from wtforms_alchemy import model_form_factory
 # ---------------------------------------------------------------------------
 # Define a method for checking the safety of redirects
 # ---------------------------------------------------------------------------
-def is_safe_url(target):
+def is_safe_url(target_url: str) -> bool:
     ''' Check to see if a URL redirects within the website
-    by http://flask.pocoo.org/snippets/62/
+    
+    Code written by http://flask.pocoo.org/snippets/62/
+    
+    It is intended to prevent open redirects
     '''
     ref_url = urlparse(request.host_url)
-    test_url = urlparse(urljoin(request.host_url, target))
+    test_url = urlparse(urljoin(request.host_url, target_url))
     return test_url.scheme in ('http', 'https') and \
            ref_url.netloc == test_url.netloc
 
@@ -31,7 +34,7 @@ def is_safe_url(target):
 BaseModelForm = model_form_factory(Form)
 
 class ModelForm(BaseModelForm):
-    ''' Base model WTForm to build others off of'''
+    ''' Base model WTForm to build others off of.'''
     @classmethod
     def get_session(self):
         return db.session

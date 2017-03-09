@@ -43,16 +43,19 @@
           <div class="body" role="main">
             
   <h1>Source code for run_testserver</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Desc.:      Runs the test server</span>
-<span class="sd">Purpose:    Testing the website on a localhost</span>
-<span class="sd">Author:     Joel Tannas</span>
-<span class="sd">Date:       MAR 03, 2017</span>
+<span></span><span class="sd">&#39;&#39;&#39; Runs a test server using the built in web server - Not suitable to deploy</span>
+
+<span class="sd">This script runs the flask server. While suitable for development, it can only</span>
+<span class="sd">handle one request at a time. It isn&#39;t enough for a full-scale deployment.</span>
+<span class="sd">See: http://flask.pocoo.org/docs/0.12/api/#application-object</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">from</span> <span class="nn">app</span> <span class="k">import</span> <span class="n">app</span>
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../run_testserver.html#run_testserver.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39; Runs the built-in flask server &#39;&#39;&#39;</span>
+    
     <span class="n">ssl_context</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="sd">&#39;&#39;&#39; This points to the SSL certs to run with https &#39;&#39;&#39;</span>
     <span class="c1"># ssl_context = (&#39;./cert.crt&#39;, &#39;./key.key&#39;)</span>
         <span class="c1"># Cloud9 does not support self-signed dev certs</span>
     

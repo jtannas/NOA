@@ -44,131 +44,79 @@
             
   <div class="section" id="module-config">
 <span id="config-module"></span><h1>config module<a class="headerlink" href="#module-config" title="Permalink to this headline">¶</a></h1>
-<p>Desc.:      Configuration settings within the application object
-Purpose:    app.config.from_object(&#8216;config&#8217;)
-Author:     Joel Tannas
-Date:       MAR 03, 2017</p>
+<p>Configuration settings for the Flask application.</p>
+<p>This module provides the configuration settings for the flask application.
+Since not every setting (i.e. development, testing, production) uses the same
+settings, multiple configurations are supported.</p>
+<div class="section" id="using-configurations">
+<h2>Using Configurations<a class="headerlink" href="#using-configurations" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>A &#8216;Base&#8217; configuration class is created with default settings</li>
+<li>More specific configuration classes then inherit the base class</li>
+<li>Changes can be made to individual configurations within their class definitions</li>
+<li>The configurations are collected into a dict</li>
+<li><dl class="first docutils">
+<dt>Within your applications __init__.py, call the following code:</dt>
+<dd>&#8216;&#8217;app.config.from_object(config[&#8216;{{dict key}}&#8217;])&#8217;&#8216;</dd>
+</dl>
+</li>
+</ol>
+</div>
+<div class="section" id="database-note">
+<h2>Database Note<a class="headerlink" href="#database-note" title="Permalink to this headline">¶</a></h2>
+<p>The location of the database for the app is set within this file.
+As a default, it is called via SQLite and set within the same directory as the
+config file.</p>
+</div>
+<div class="section" id="customizing-for-your-application">
+<h2>Customizing for your application<a class="headerlink" href="#customizing-for-your-application" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<ul class="last simple">
+<li>Support configuration from an Instance Folder for individual deployments</li>
+</ul>
+</div>
 <dl class="class">
 <dt id="config.BaseConfig">
 <em class="property">class </em><code class="descclassname">config.</code><code class="descname">BaseConfig</code><a class="reference internal" href="_modules/config.html#BaseConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#config.BaseConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
-<p>Base configuration for the application.
-It is meant as a &#8216;baseline&#8217; set of configuration setting that
-is then extended via more specific configuration</p>
-<dl class="attribute">
-<dt id="config.BaseConfig.APP_NAME">
-<code class="descname">APP_NAME</code><em class="property"> = 'NOA'</em><a class="headerlink" href="#config.BaseConfig.APP_NAME" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="config.BaseConfig.CSRF_ENABLED">
-<code class="descname">CSRF_ENABLED</code><em class="property"> = True</em><a class="headerlink" href="#config.BaseConfig.CSRF_ENABLED" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="config.BaseConfig.CSRF_SESSION_KEY">
-<code class="descname">CSRF_SESSION_KEY</code><em class="property"> = 'ChangeMe'</em><a class="headerlink" href="#config.BaseConfig.CSRF_SESSION_KEY" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="config.BaseConfig.DATABASE_CONNECT_OPTIONS">
-<code class="descname">DATABASE_CONNECT_OPTIONS</code><em class="property"> = {}</em><a class="headerlink" href="#config.BaseConfig.DATABASE_CONNECT_OPTIONS" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="config.BaseConfig.DEBUG">
-<code class="descname">DEBUG</code><em class="property"> = True</em><a class="headerlink" href="#config.BaseConfig.DEBUG" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="config.BaseConfig.RECAPTCHA_PRIVATE_KEY">
-<code class="descname">RECAPTCHA_PRIVATE_KEY</code><em class="property"> = 'ChangeMe'</em><a class="headerlink" href="#config.BaseConfig.RECAPTCHA_PRIVATE_KEY" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="config.BaseConfig.RECAPTCHA_PUBLIC_KEY">
-<code class="descname">RECAPTCHA_PUBLIC_KEY</code><em class="property"> = 'ChangeMe'</em><a class="headerlink" href="#config.BaseConfig.RECAPTCHA_PUBLIC_KEY" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="config.BaseConfig.RECAPTCHA_USE_SSL">
-<code class="descname">RECAPTCHA_USE_SSL</code><em class="property"> = True</em><a class="headerlink" href="#config.BaseConfig.RECAPTCHA_USE_SSL" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="config.BaseConfig.SECRET_KEY">
-<code class="descname">SECRET_KEY</code><em class="property"> = 'ChangeMe'</em><a class="headerlink" href="#config.BaseConfig.SECRET_KEY" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="config.BaseConfig.SESSION_FILE_DIR">
-<code class="descname">SESSION_FILE_DIR</code><em class="property"> = '/tmp'</em><a class="headerlink" href="#config.BaseConfig.SESSION_FILE_DIR" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="config.BaseConfig.SESSION_PERMANENT">
-<code class="descname">SESSION_PERMANENT</code><em class="property"> = False</em><a class="headerlink" href="#config.BaseConfig.SESSION_PERMANENT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="config.BaseConfig.SESSION_TYPE">
-<code class="descname">SESSION_TYPE</code><em class="property"> = 'filesystem'</em><a class="headerlink" href="#config.BaseConfig.SESSION_TYPE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="config.BaseConfig.SQLALCHEMY_DATABASE_URI">
-<code class="descname">SQLALCHEMY_DATABASE_URI</code><em class="property"> = 'sqlite:////home/ubuntu/workspace/NOA/app.db'</em><a class="headerlink" href="#config.BaseConfig.SQLALCHEMY_DATABASE_URI" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="config.BaseConfig.SQLALCHEMY_TRACK_MODIFICATIONS">
-<code class="descname">SQLALCHEMY_TRACK_MODIFICATIONS</code><em class="property"> = False</em><a class="headerlink" href="#config.BaseConfig.SQLALCHEMY_TRACK_MODIFICATIONS" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="config.BaseConfig.THREADS_PER_PAGE">
-<code class="descname">THREADS_PER_PAGE</code><em class="property"> = 2</em><a class="headerlink" href="#config.BaseConfig.THREADS_PER_PAGE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="config.BaseConfig.gettempdir">
-<code class="descname">gettempdir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#config.BaseConfig.gettempdir" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor for tempfile.tempdir.</p>
-</dd></dl>
-
+<p>Base configuration for the application.</p>
+<p>This configuration is meant as a &#8216;baseline&#8217; set of configuration setting that
+is then extended via more specific configuration. It does not inherit anything.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="config.DevConfig">
 <em class="property">class </em><code class="descclassname">config.</code><code class="descname">DevConfig</code><a class="reference internal" href="_modules/config.html#DevConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#config.DevConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#config.BaseConfig" title="config.BaseConfig"><code class="xref py py-class docutils literal"><span class="pre">config.BaseConfig</span></code></a></p>
-<p>Dev config</p>
+<p>Dev configuration</p>
+<p>Flask App Dev configuration, inherits the BaseConfig and modifies it.
+The database is set to a generic app.db for development</p>
+<blockquote>
+<div><ul class="simple">
+<li></li>
+</ul>
+</div></blockquote>
 </dd></dl>
 
 <dl class="class">
 <dt id="config.ProdConfig">
 <em class="property">class </em><code class="descclassname">config.</code><code class="descname">ProdConfig</code><a class="reference internal" href="_modules/config.html#ProdConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#config.ProdConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#config.BaseConfig" title="config.BaseConfig"><code class="xref py py-class docutils literal"><span class="pre">config.BaseConfig</span></code></a></p>
-<p>Production config</p>
-<dl class="attribute">
-<dt id="config.ProdConfig.DEBUG">
-<code class="descname">DEBUG</code><em class="property"> = False</em><a class="headerlink" href="#config.ProdConfig.DEBUG" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="config.ProdConfig.SQLALCHEMY_DATABASE_URI">
-<code class="descname">SQLALCHEMY_DATABASE_URI</code><em class="property"> = 'sqlite:////home/ubuntu/workspace/NOA/NOA.db'</em><a class="headerlink" href="#config.ProdConfig.SQLALCHEMY_DATABASE_URI" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<p>Production configuration</p>
+<p>Flask App Productin configuration, inherits the BaseConfig and modifies it.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="config.TestConfig">
 <em class="property">class </em><code class="descclassname">config.</code><code class="descname">TestConfig</code><a class="reference internal" href="_modules/config.html#TestConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#config.TestConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#config.BaseConfig" title="config.BaseConfig"><code class="xref py py-class docutils literal"><span class="pre">config.BaseConfig</span></code></a></p>
-<p>Testing config</p>
+<p>Testing configuration</p>
+<p>Flask App Test configuration, inherits the BaseConfig and modifies it.
+Is intended to use a duplicate of the production database to allow testing</p>
 </dd></dl>
 
+</div>
 </div>
 
 
@@ -176,7 +124,17 @@ is then extended via more specific configuration</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">config module</a><ul>
+<li><a class="reference internal" href="#using-configurations">Using Configurations</a></li>
+<li><a class="reference internal" href="#database-note">Database Note</a></li>
+<li><a class="reference internal" href="#customizing-for-your-application">Customizing for your application</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>

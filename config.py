@@ -1,28 +1,51 @@
-'''
-Desc.:      Configuration settings within the application object
-Purpose:    app.config.from_object('config')
-Author:     Joel Tannas
-Date:       MAR 03, 2017
+''' Configuration settings for the Flask application.
+
+This module provides the configuration settings for the flask application.
+Since not every setting (i.e. development, testing, production) uses the same
+settings, multiple configurations are supported.
+
+Using Configurations
+--------------------
+1. A 'Base' configuration class is created with default settings
+2. More specific configuration classes then inherit the base class
+3. Changes can be made to individual configurations within their class definitions
+4. The configurations are collected into a dict
+5. Within your applications __init__.py, call the following code:
+    ''app.config.from_object(config['{{dict key}}'])''
+    
+Database Note
+-------------
+The location of the database for the app is set within this file.
+As a default, it is called via SQLite and set within the same directory as the
+config file.
+
+Customizing for your application
+--------------------------------
+Todo:
+    * Support configuration from an Instance Folder for individual deployments
 '''
 
 # Define the application directory
 import os
 import warnings
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))       
+from tempfile import gettempdir
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 class BaseConfig:
     ''' 
     Base configuration for the application.
-    It is meant as a 'baseline' set of configuration setting that
-    is then extended via more specific configuration
+    
+    This configuration is meant as a 'baseline' set of configuration setting that
+    is then extended via more specific configuration. It does not inherit anything.
     '''
+    
+    # Set the Application Name
     APP_NAME = "NOA"
 
     # Set to Debug Mode
     DEBUG = True
      
     # Use server side sessions for greater security
-    from tempfile import gettempdir
     SESSION_FILE_DIR = gettempdir()
     SESSION_PERMANENT = False
     SESSION_TYPE = "filesystem"
@@ -63,15 +86,29 @@ class BaseConfig:
         RECAPTCHA_PRIVATE_KEY = 'ChangeMe'
           
 class DevConfig(BaseConfig):
-    '''Dev config'''
-    # TODO
+    '''Dev configuration
+    
+    Flask App Dev configuration, inherits the BaseConfig and modifies it.
+    The database is set to a generic app.db for development
+        * 
+    '''
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')
+    DEBUG = True
     
 class TestConfig(BaseConfig):
-    '''Testing config'''
-    # TODO
+    '''Testing configuration
+    
+    Flask App Test configuration, inherits the BaseConfig and modifies it.
+    Is intended to use a duplicate of the production database to allow testing
+    '''
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'NOA.1.db')
+    DEBUG = False
 
 class ProdConfig(BaseConfig):
-    '''Production config'''
+    '''Production configuration
+    
+    Flask App Productin configuration, inherits the BaseConfig and modifies it.
+    '''
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'NOA.db')
     
