@@ -4,8 +4,8 @@ NOA
 Nameless Organizing Application
 -------------------------------
 This is a Flask web application whose main purposes are:
-- act as a Team To-Do list
-- serve as a template for future Flask development work on large websites (via adding modules)
+    - act as a Team To-Do list
+    - serve as a template for future Flask development work on large websites (via adding modules)
  
 General Information
 -------------------
@@ -23,10 +23,10 @@ There are also folders (that have been .gitignore'd) for /instance and /env.
 The instance folder is for instance specific information (e.g. keys) and the env folder is for the virtual environment information.
 If possible on your computer, I recommend virtualenvwrapper to keep your virtual environments out of the application folder.
 
-> ##### Useful Links
-> - http://exploreflask.com/en/latest/index.html
-> - https://www.digitalocean.com/community/tutorials/how-to-structure-large-flask-applications
-> - http://flask.pocoo.org/docs/0.12/blueprints/
+Useful Links
+    - <http://exploreflask.com/en/latest/index.html>
+    - <https://www.digitalocean.com/community/tutorials/how-to-structure-large-flask-applications>
+    - <http://flask.pocoo.org/docs/0.12/blueprints/>
 
 Templates
 ~~~~~~~~~
@@ -43,18 +43,7 @@ Forms
 WTForms is the starting point for creating forms.
 This is then extended via WTForms_Alchemy. This lets you populate forms directly from SQLAlchemy tabledefinions (including built in validation).
 
-> * Useful Links *
-> - http://flask.pocoo.org/docs/0.12/patterns/wtforms/
-> - http://wtforms.readthedocs.io/en/latest/#
-> - https://wtforms-alchemy.readthedocs.io/en/latest/
-
-WIP NOTES
-=========
-Notes to self for future work not specific to any modules
-
-Flask WTForms AJAX
-    https://github.com/saltycrane/flask-jquery-ajax-example
-    http://flask-wtf.readthedocs.io/en/latest/csrf.html#ajax
-    
-Sphinx Documentation with Docstrings
-    http://thomas-cokelaer.info/tutorials/sphinx/docstring_python.html
+Useful Links
+    - <http://flask.pocoo.org/docs/0.12/patterns/wtforms/>
+    - <http://wtforms.readthedocs.io/en/latest/#>
+    - <https://wtforms-alchemy.readthedocs.io/en/latest/>

@@ -6,7 +6,7 @@ The Upshot
 ==========
 This project uses python docstrings to document all the python modules.
 The preferred style is with Google Style python docstrings.
-See here for examples: [Example Docstrings](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html)
+See here for examples: 'Example Docstrings<https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html>'
 Do NOT use __{{property}}__ variables for version/author/etc... They are extra work, done better by GitHub, that are often outdated.
 
 Technology in use
@@ -15,10 +15,10 @@ Sphinx is a tool for generating documentation files from docstrings that are ins
 The docstrings must be written in RST format (a markup language).
 There is an extension installed (sphinx-napoleon) that allows Google style docstrings.
 
-[sphinx-apidocs](http://www.sphinx-doc.org/en/stable/man/sphinx-apidoc.html): Generates rst files for python modules in a given directory
-[sphinx-autodoc](http://www.sphinx-doc.org/en/stable/ext/autodoc.html): Pulls docstrings from python modules into sphinx documentation
-[sphinx](http://www.sphinx-doc.org/): Turns rst files into a variety of documentation formats
-[sphinx-napoleon](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/): Allows the use of friendlier style docstrings
+'sphinx-apidocs <http://www.sphinx-doc.org/en/stable/man/sphinx-apidoc.html>': Generates rst files for python modules in a given directory
+'sphinx-autodoc<http://www.sphinx-doc.org/en/stable/ext/autodoc.html>': Pulls docstrings from python modules into sphinx documentation
+'sphinx<http://www.sphinx-doc.org/>': Turns rst files into a variety of documentation formats
+'sphinx-napoleon<https://sphinxcontrib-napoleon.readthedocs.io/en/latest/>': Allows the use of friendlier style docstrings
 
 Setup Instructions
 ==================
