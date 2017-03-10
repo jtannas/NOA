@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Documentation ReadMe &#8212; NOA 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="documentation-readme">
+<span id="documenationreadme"></span><h1>Documentation ReadMe<a class="headerlink" href="#documentation-readme" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="the-upshot">
+<h2>The Upshot<a class="headerlink" href="#the-upshot" title="Permalink to this headline">¶</a></h2>
+<p>This project uses python docstrings to document all the python modules.
+The preferred style is with Google Style python docstrings.
+See here for examples: <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Example Docstrings</a>.</p>
+<p>Do NOT use __{{property}}__ variables for version/author/etc... Though a good idea in theory, in practice they are extra work, done better by GitHub, and are often outdated.</p>
+</div>
+<div class="section" id="technology-in-use">
+<h2>Technology in use<a class="headerlink" href="#technology-in-use" title="Permalink to this headline">¶</a></h2>
+<p>Sphinx is a tool for generating documentation files from docstrings that are inside the code.
+The docstrings must be written in RST format (a markup language).
+There is an extension installed (sphinx-napoleon) that allows Google style docstrings.</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.sphinx-doc.org/en/stable/man/sphinx-apidoc.html">sphinx-apidocs</a> : Generates rst files for python modules in a given directory</li>
+<li><a class="reference external" href="http://www.sphinx-doc.org/en/stable/ext/autodoc.html">sphinx-autodoc</a> : Pulls docstrings from python modules into sphinx documentation</li>
+<li><a class="reference external" href="http://www.sphinx-doc.org/">sphinx</a>: Turns rst files into a variety of documentation formats</li>
+<li><a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/">sphinx-napoleon</a>: Allows the use of friendlier style docstrings</li>
+</ul>
+</div>
+<div class="section" id="setup-instructions">
+<h2>Setup Instructions<a class="headerlink" href="#setup-instructions" title="Permalink to this headline">¶</a></h2>
+<p>The following are instructions for setting up sphinx. All the extensions should be installed beforehand using pip.</p>
+<div class="section" id="make-the-directory">
+<h3>MAKE THE DIRECTORY<a class="headerlink" href="#make-the-directory" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">cd {{ projectroot }}</div>
+<div class="line">sphinx-quickstart</div>
+<div class="line">&gt; Root path for the documentation [.]: ./documentation</div>
+<div class="line">&gt; Separate source and build directories (y/n) [n]: y</div>
+<div class="line">&gt; Name prefix for templates and static dir [_]:</div>
+<div class="line">&gt; Project name: NOA</div>
+<div class="line">&gt; Author name(s): Joel Tannas</div>
+<div class="line">&gt; Project version []: 0.0.1</div>
+<div class="line">&gt; Project release [0.0.1]:</div>
+<div class="line">&gt; Project language [en]:</div>
+<div class="line">&gt; Source file suffix [.rst]:</div>
+<div class="line">&gt; Name of your master document (without suffix) [index]:</div>
+<div class="line">&gt; Do you want to use the epub builder (y/n) [n]:</div>
+<div class="line"><br /></div>
+<div class="line">&gt; autodoc: automatically insert docstrings from modules (y/n) [n]: y</div>
+<div class="line">&gt; doctest: automatically test code snippets in doctest blocks (y/n) [n]:</div>
+<div class="line">&gt; intersphinx: link between Sphinx documentation of different projects (y/n) [n]: y</div>
+<div class="line">&gt; todo: write &#8220;todo&#8221; entries that can be shown or hidden on build (y/n) [n]: y</div>
+<div class="line">&gt; coverage: checks for documentation coverage (y/n) [n]: y</div>
+<div class="line">&gt; imgmath: include math, rendered as PNG or SVG images (y/n) [n]:</div>
+<div class="line">&gt; mathjax: include math, rendered in the browser by MathJax (y/n) [n]: y</div>
+<div class="line">&gt; ifconfig: conditional inclusion of content based on config values (y/n) [n]: y</div>
+<div class="line">&gt; viewcode: include links to the source code of documented Python objects (y/n) [n]: y</div>
+<div class="line">&gt; githubpages: create .nojekyll file to publish the document on GitHub pages (y/n) [n]: y  |</div>
+<div class="line"><br /></div>
+<div class="line">&gt; Create Makefile? (y/n) [y]: y</div>
+<div class="line">&gt; Create Windows command file? (y/n) [y]: y</div>
+</div>
+</div>
+<div class="section" id="update-the-conf-py-in-documentation-source">
+<h3>UPDATE THE CONF.PY IN DOCUMENTATION/SOURCE<a class="headerlink" href="#update-the-conf-py-in-documentation-source" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="add-paths-for-sphinx-to-search-for-python-modules-py-files">
+<h4>Add paths for sphinx to search for python modules (.py files)<a class="headerlink" href="#add-paths-for-sphinx-to-search-for-python-modules-py-files" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">import os</div>
+<div class="line">import sys</div>
+<div class="line">sys.path.insert(0, os.path.abspath(&#8216;../..&#8217;))</div>
+</div>
+</div>
+<div class="section" id="exclude-certain-patterns-from-those-paths">
+<h4>Exclude certain patterns from those paths<a class="headerlink" href="#exclude-certain-patterns-from-those-paths" title="Permalink to this headline">¶</a></h4>
+<p>exclude_patterns = [&#8216;_build&#8217;, &#8216;Thumbs.db&#8217;, &#8216;.DS_Store&#8217;, &#8216;./instance&#8217;, &#8216;./venv&#8217;]</p>
+</div>
+</div>
+<div class="section" id="make-the-module-rst-files">
+<h3>MAKE THE MODULE RST FILES<a class="headerlink" href="#make-the-module-rst-files" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">cd {{ projectroot }}/documentation</div>
+<div class="line">sphinx-apidoc -o ./source ..</div>
+</div>
+</div>
+<div class="section" id="generate-the-documentation">
+<h3>GENERATE THE DOCUMENTATION<a class="headerlink" href="#generate-the-documentation" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">cd {{ projectroot }}/documentation</div>
+<div class="line">make clean</div>
+<div class="line">make html</div>
+</div>
+<p><em>There should now be a file {{ projectroot }}/documentation/build/html/index.html that gives the index of the project documentation</em></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Documentation ReadMe</a><ul>
+<li><a class="reference internal" href="#the-upshot">The Upshot</a></li>
+<li><a class="reference internal" href="#technology-in-use">Technology in use</a></li>
+<li><a class="reference internal" href="#setup-instructions">Setup Instructions</a><ul>
+<li><a class="reference internal" href="#make-the-directory">MAKE THE DIRECTORY</a></li>
+<li><a class="reference internal" href="#update-the-conf-py-in-documentation-source">UPDATE THE CONF.PY IN DOCUMENTATION/SOURCE</a><ul>
+<li><a class="reference internal" href="#add-paths-for-sphinx-to-search-for-python-modules-py-files">Add paths for sphinx to search for python modules (.py files)</a></li>
+<li><a class="reference internal" href="#exclude-certain-patterns-from-those-paths">Exclude certain patterns from those paths</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#make-the-module-rst-files">MAKE THE MODULE RST FILES</a></li>
+<li><a class="reference internal" href="#generate-the-documentation">GENERATE THE DOCUMENTATION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/README.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Joel Tannas.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/README.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

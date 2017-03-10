@@ -43,24 +43,30 @@
           <div class="body" role="main">
             
   <h1>Source code for app.mod_auth.forms</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Desc.:      Form definitions using WTForms-Alchemy</span>
-<span class="sd">Purpose:    ^</span>
-<span class="sd">Author:     Joel Tannas</span>
-<span class="sd">Date:       MAR 03, 2017</span>
+<span></span><span class="sd">&#39;&#39;&#39; Form definitions using WTForms-Alchemy</span>
+
+<span class="sd">This module contains the userform definitions for how users interract with</span>
+<span class="sd">application data. They are created using WTForms, and are then passed to the</span>
+<span class="sd">Jinja templates by the module controller.</span>
+
+<span class="sd">WTForms-Alchemy is an extension that allows WTForms to be generated from </span>
+<span class="sd">SQLAlchemy models. This ensures that the validation is synched between the </span>
+<span class="sd">two (though overrides are possible).</span>
+
+<span class="sd">References:</span>
+<span class="sd">    - This module&#39;s: User model</span>
+<span class="sd">    - The Parent Application ModelForm</span>
+<span class="sd">    </span>
+<span class="sd">Yields:</span>
+<span class="sd">    - Login Form</span>
+<span class="sd">    - Registration Form</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="c1"># ---------------------------------------------------------------------------</span>
 <span class="c1"># Generic Imports:</span>
 <span class="c1"># ---------------------------------------------------------------------------</span>
-
-<span class="c1"># Import Form and RecaptchaField</span>
 <span class="kn">from</span> <span class="nn">flask_wtf</span> <span class="k">import</span> <span class="n">RecaptchaField</span>
-
-<span class="c1"># Import Form elements</span>
 <span class="kn">from</span> <span class="nn">wtforms</span> <span class="k">import</span> <span class="n">PasswordField</span><span class="p">,</span> <span class="n">BooleanField</span><span class="p">,</span> <span class="n">validators</span>
-
-<span class="c1"># Import Form validators</span>
 <span class="kn">from</span> <span class="nn">wtforms.validators</span> <span class="k">import</span> <span class="n">Required</span><span class="p">,</span> <span class="n">EqualTo</span><span class="p">,</span> <span class="n">Regexp</span>
 
 <span class="c1"># ---------------------------------------------------------------------------</span>
@@ -76,6 +82,8 @@
     <span class="sd">&#39;&#39;&#39; User Login Form &#39;&#39;&#39;</span>
     
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; Pull the User SQLAlchemy definition as a base for the form &#39;&#39;&#39;</span>
+        
         <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
         <span class="n">only</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">]</span>
         <span class="n">unique_validator</span> <span class="o">=</span> <span class="kc">None</span></div>
@@ -84,16 +92,20 @@
     <span class="sd">&#39;&#39;&#39; User Registration Form &#39;&#39;&#39;</span>
     
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39; Pull the User SQLAlchemy definition as a base for the form &#39;&#39;&#39;</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
         <span class="n">only</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">]</span>
-                
+    
+    <span class="c1">#: Password Confirmation Field            </span>
     <span class="n">confirm</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span><span class="s1">&#39;Repeat Password&#39;</span><span class="p">,</span>
                 <span class="p">[</span><span class="n">Required</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s1">&#39;Must confirm a password&#39;</span><span class="p">),</span>
                 <span class="n">EqualTo</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s1">&#39;Passwords must match&#39;</span><span class="p">)])</span>
-                
+    
+    <span class="c1">#: Terms of Service Acceptance            </span>
     <span class="n">accept_tos</span> <span class="o">=</span> <span class="n">BooleanField</span><span class="p">(</span><span class="s1">&#39;I accept the Terms of Service&#39;</span><span class="p">,</span> 
                 <span class="p">[</span><span class="n">Required</span><span class="p">()])</span>
-                
+    
+    <span class="c1">#: Recaptcha to prevent bot registration            </span>
     <span class="n">recaptcha</span> <span class="o">=</span> <span class="n">RecaptchaField</span><span class="p">()</span></div>
 </pre></div>
 

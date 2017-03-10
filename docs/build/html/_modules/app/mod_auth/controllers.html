@@ -43,67 +43,64 @@
           <div class="body" role="main">
             
   <h1>Source code for app.mod_auth.controllers</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Desc.:      The business logic for the auth module</span>
-<span class="sd">Purpose:    Controlling the server side behaviour of the pages</span>
-<span class="sd">Author:     Joel Tannas</span>
-<span class="sd">Date:       MAR 03, 2017</span>
+<span></span><span class="sd">&#39;&#39;&#39; The business logic &amp; routing controller of this module</span>
+
+<span class="sd">The is the controller aspect of the module.</span>
+
+<span class="sd">References:</span>
+<span class="sd">    - The Parent Application</span>
+<span class="sd">    - The Parent Application database</span>
+<span class="sd">    - The Parent Application utilities</span>
+<span class="sd">    - This module&#39;s: database models, jinja templates, and WTForms</span>
+
+<span class="sd">Yields:</span>
+<span class="sd">    - Method: Load User Record</span>
+<span class="sd">    - Route: User Sign-In</span>
+<span class="sd">    - Route: New User Registration</span>
+<span class="sd">    - Route: User Log-out</span>
+<span class="sd">    </span>
+<span class="sd">Todo:</span>
+<span class="sd">    - Overhaul expected in the near future - See the GitHub Projects</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="c1"># ---------------------------------------------------------------------------</span>
 <span class="c1"># Generic Imports: </span>
 <span class="c1"># ---------------------------------------------------------------------------</span>
-
-<span class="c1"># Import the environ to retrieve the reCaptcha public key</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">environ</span>
-
-<span class="c1"># Import flask dependencies</span>
 <span class="kn">from</span> <span class="nn">flask</span> <span class="k">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> \
                   <span class="n">flash</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">url_for</span>
-                  
-<span class="c1"># Import flask login</span>
 <span class="kn">from</span> <span class="nn">flask_login</span> <span class="k">import</span> <span class="n">login_user</span><span class="p">,</span> <span class="n">logout_user</span><span class="p">,</span> <span class="n">login_required</span><span class="p">,</span> \
                         <span class="n">current_user</span>
 
 <span class="c1"># ---------------------------------------------------------------------------</span>
-<span class="c1"># App Imports: </span>
+<span class="c1"># Application Imports: </span>
 <span class="c1"># ---------------------------------------------------------------------------</span>
-<span class="c1"># Import the database object &amp; login_manager</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">db</span>
 <span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">is_safe_url</span>
 
-<span class="c1"># ---------------------------------------------------------------------------</span>
-<span class="c1"># Module_Auth Imports: </span>
-<span class="c1"># ---------------------------------------------------------------------------</span>
-<span class="c1"># Import the login manager</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">login_manager</span>
-
-<span class="c1"># Import module forms</span>
 <span class="kn">from</span> <span class="nn">.forms</span> <span class="k">import</span> <span class="n">LoginForm</span><span class="p">,</span> <span class="n">RegistrationForm</span>
-
-<span class="c1"># Import module models</span>
 <span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">User</span>
 
-<span class="c1"># Define the blueprint: &#39;auth&#39;</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Methods, Decorators, and Vars: </span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="c1"># Define the blueprint for import into the parent application</span>
 <span class="n">mod_auth</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s1">&#39;auth&#39;</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">,</span> <span class="n">url_prefix</span><span class="o">=</span><span class="s1">&#39;/auth&#39;</span><span class="p">,</span>
                     <span class="n">template_folder</span><span class="o">=</span><span class="s1">&#39;templates&#39;</span><span class="p">,</span>
                     <span class="n">static_folder</span><span class="o">=</span><span class="s1">&#39;static&#39;</span><span class="p">)</span>
-
-<span class="c1"># ---------------------------------------------------------------------------</span>
-<span class="c1"># Methods &amp; Decorators: </span>
-<span class="c1"># ---------------------------------------------------------------------------</span>
-
+                    
 <span class="c1"># flask_login required decorator and method </span>
 <span class="nd">@login_manager</span><span class="o">.</span><span class="n">user_loader</span>
-<div class="viewcode-block" id="load_user"><a class="viewcode-back" href="../../../app.mod_auth.html#app.mod_auth.controllers.load_user">[docs]</a><span class="k">def</span> <span class="nf">load_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
+<div class="viewcode-block" id="load_user"><a class="viewcode-back" href="../../../app.mod_auth.html#app.mod_auth.controllers.load_user">[docs]</a><span class="k">def</span> <span class="nf">load_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Gets the user for a given user id&#39;&#39;&#39;</span>
+    
     <span class="k">return</span> <span class="n">User</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span></div>
 
 <span class="c1"># ---------------------------------------------------------------------------</span>
 <span class="c1"># Sign In Route: </span>
 <span class="c1"># ---------------------------------------------------------------------------</span>
-
-
 <span class="nd">@mod_auth</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/signin/&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
 <div class="viewcode-block" id="signin"><a class="viewcode-back" href="../../../app.mod_auth.html#app.mod_auth.controllers.signin">[docs]</a><span class="k">def</span> <span class="nf">signin</span><span class="p">():</span>
     <span class="sd">&#39;&#39;&#39;Sign-In page for the user&#39;&#39;&#39;</span>
@@ -143,7 +140,8 @@
 <span class="nd">@mod_auth</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/signup/&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
 <div class="viewcode-block" id="signup"><a class="viewcode-back" href="../../../app.mod_auth.html#app.mod_auth.controllers.signup">[docs]</a><span class="k">def</span> <span class="nf">signup</span><span class="p">():</span>
     <span class="sd">&#39;&#39;&#39; Registration page for new users &#39;&#39;&#39;</span>
-    <span class="c1"># Load the WTForm</span>
+    
+    <span class="c1"># Load the user form into the Registration Form format</span>
     <span class="n">form</span> <span class="o">=</span> <span class="n">RegistrationForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">)</span>
     
     <span class="c1"># If sign up form is submitted via POST, validate the form</span>
@@ -170,6 +168,7 @@
 
 <div class="viewcode-block" id="signout"><a class="viewcode-back" href="../../../app.mod_auth.html#app.mod_auth.controllers.signout">[docs]</a><span class="k">def</span> <span class="nf">signout</span><span class="p">():</span>
     <span class="sd">&#39;&#39;&#39; Log out route &#39;&#39;&#39;</span>
+    
     <span class="k">if</span> <span class="n">current_user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">:</span>
         <span class="n">logout_user</span><span class="p">()</span>
         <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;You have been logged out&quot;</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">)</span>

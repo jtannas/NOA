@@ -43,16 +43,114 @@
           <div class="body" role="main">
             
   <div class="section" id="welcome-to-noa-s-documentation">
-<h1>Welcome to NOA&#8217;s documentation!<a class="headerlink" href="#welcome-to-noa-s-documentation" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id1">Welcome to NOA&#8217;s documentation!</a><a class="headerlink" href="#welcome-to-noa-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
+</div>
+<div class="section" id="noa-nameless-organizing-application">
+<h2><a class="toc-backref" href="#id2">NOA: Nameless Organizing Application</a><a class="headerlink" href="#noa-nameless-organizing-application" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>This is a Flask web application whose main purposes are:</dt>
+<dd><ul class="first last simple">
+<li>serve as a template for future Flask development work on large websites (via adding modules)</li>
+<li>act as a Team To-Do list</li>
+</ul>
+</dd>
+</dl>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#welcome-to-noa-s-documentation" id="id1">Welcome to NOA&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#noa-nameless-organizing-application" id="id2">NOA: Nameless Organizing Application</a><ul>
+<li><a class="reference internal" href="#general-information" id="id3">General Information</a><ul>
+<li><a class="reference internal" href="#inspiration-and-guide" id="id4">Inspiration and Guide</a></li>
+<li><a class="reference internal" href="#general-structure" id="id5">General Structure</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#technologies" id="id6">Technologies</a><ul>
+<li><a class="reference internal" href="#documentation" id="id7">Documentation</a></li>
+<li><a class="reference internal" href="#databases" id="id8">Databases</a></li>
+<li><a class="reference internal" href="#forms" id="id9">Forms</a></li>
+<li><a class="reference internal" href="#templates" id="id10">Templates</a></li>
+<li><a class="reference internal" href="#testing" id="id11">Testing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables" id="id12">Indices and tables</a></li>
+</ul>
+</div>
+<div class="section" id="general-information">
+<h3><a class="toc-backref" href="#id3">General Information</a><a class="headerlink" href="#general-information" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="inspiration-and-guide">
+<h4><a class="toc-backref" href="#id4">Inspiration and Guide</a><a class="headerlink" href="#inspiration-and-guide" title="Permalink to this headline">¶</a></h4>
+<p>I began with Flask while doing the CS50X course run by David J Malan of Harvard.
+A lot of the basics of the application are coming from <a class="reference external" href="http://exploreflask.com/en/latest/">http://exploreflask.com/en/latest/</a>
+The reason it&#8217;s a team organizer (even though that&#8217;s been done many times already) is that I&#8217;m drawing from memories of something I built in MS Access at a previous job. Learning all the technology is enough to occupy my brain without having to be creative too.</p>
+</div>
+<div class="section" id="general-structure">
+<h4><a class="toc-backref" href="#id5">General Structure</a><a class="headerlink" href="#general-structure" title="Permalink to this headline">¶</a></h4>
+<p>This flask application is built around Flask blueprints. They makes it easy to seperate different functions into self-contained modules. I&#8217;m heavily emphasizing modular code in this project so that I get a better understanding of how to build a larger project from independent chunks.</p>
+<p>The &#8216;app&#8217; folder is the actual application, and is initialized via the ./app/__init__.py file, and pulls configuration information from the config.py file. There are also folders (that have been .gitignore&#8217;d) for /instance and /env. The instance folder is for instance specific information (e.g. keys) and the env folder is for the virtual environment information. If possible on your computer, I recommend virtualenvwrapper to keep your virtual environments out of the application folder.</p>
+<dl class="docutils">
+<dt>Useful Links</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://exploreflask.com/en/latest/index.html">http://exploreflask.com/en/latest/index.html</a></li>
+<li><a class="reference external" href="https://www.digitalocean.com/community/tutorials/how-to-structure-large-flask-applications">https://www.digitalocean.com/community/tutorials/how-to-structure-large-flask-applications</a></li>
+<li><a class="reference external" href="http://flask.pocoo.org/docs/0.12/blueprints/">http://flask.pocoo.org/docs/0.12/blueprints/</a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="technologies">
+<h3><a class="toc-backref" href="#id6">Technologies</a><a class="headerlink" href="#technologies" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="documentation">
+<h4><a class="toc-backref" href="#id7">Documentation</a><a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h4>
+<p>Documentation is done via python docstrings in the Google format. These are then collected into the documention by a program called Sphinx (with the help of some extensions). <a class="reference internal" href="README.html#documenationreadme"><span class="std std-ref">See the Documentation ReadMe for more details</span></a>.</p>
+</div>
+<div class="section" id="databases">
+<h4><a class="toc-backref" href="#id8">Databases</a><a class="headerlink" href="#databases" title="Permalink to this headline">¶</a></h4>
+<p>For database interaction, I am using Flask_SQLAlchemy. This lets you interact with the databases in a much more &#8216;pythonic&#8217; way.
+It also takes care of guarding against SQL injection, so the app is structurally protected against it.
+If the database file does not exist, SQLAlchemy will create it based off the table definitions within the file.</p>
+</div>
+<div class="section" id="forms">
+<h4><a class="toc-backref" href="#id9">Forms</a><a class="headerlink" href="#forms" title="Permalink to this headline">¶</a></h4>
+<p>WTForms is the starting point for creating forms.
+This is then extended via WTForms_Alchemy. This lets you populate forms directly from SQLAlchemy tabledefinions (including built in validation).</p>
+<dl class="docutils">
+<dt>Useful Links</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://flask.pocoo.org/docs/0.12/patterns/wtforms/">http://flask.pocoo.org/docs/0.12/patterns/wtforms/</a></li>
+<li><a class="reference external" href="http://wtforms.readthedocs.io/en/latest">http://wtforms.readthedocs.io/en/latest</a>/#</li>
+<li><a class="reference external" href="https://wtforms-alchemy.readthedocs.io/en/latest/">https://wtforms-alchemy.readthedocs.io/en/latest/</a></li>
+</ul>
+</dd>
+</dl>
+<p>Todo:
+- Add tech for in browser validation using Jacascript (+?)</p>
+</div>
+<div class="section" id="templates">
+<h4><a class="toc-backref" href="#id10">Templates</a><a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h4>
+<p>I am using the Jinja2 templating engine to fill the content of the html pages, while relying mostly on Bootstrap for the responsive design. Flask-JSGlue is also used to bring python commands into the javascript.</p>
+</div>
+<div class="section" id="testing">
+<h4><a class="toc-backref" href="#id11">Testing</a><a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h4>
+<p>Todo:
+- Implement pytest</p>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id12">Indices and tables</a><a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
 <li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
 <li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+<li><a class="reference internal" href="todolist.html#todolist"><span class="std std-ref">To Do List</span></a></li>
 </ul>
 </div>
 
@@ -64,7 +162,25 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to NOA&#8217;s documentation!</a></li>
+<li><a class="reference internal" href="#">Welcome to NOA&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#noa-nameless-organizing-application">NOA: Nameless Organizing Application</a><ul>
+<li><a class="reference internal" href="#general-information">General Information</a><ul>
+<li><a class="reference internal" href="#inspiration-and-guide">Inspiration and Guide</a></li>
+<li><a class="reference internal" href="#general-structure">General Structure</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#technologies">Technologies</a><ul>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+<li><a class="reference internal" href="#databases">Databases</a></li>
+<li><a class="reference internal" href="#forms">Forms</a></li>
+<li><a class="reference internal" href="#templates">Templates</a></li>
+<li><a class="reference internal" href="#testing">Testing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 <div class="relations">
