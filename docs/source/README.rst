@@ -31,7 +31,7 @@ MAKE THE DIRECTORY
 -------------------
 | cd {{ projectroot }}  
 | sphinx-quickstart  
-| > Root path for the documentation [.]: ./documentation  
+| > Root path for the documentation [.]: ./docs
 | > Separate source and build directories (y/n) [n]: y  
 | > Name prefix for templates and static dir [_]:   
 | > Project name: NOA  
@@ -72,13 +72,13 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', './instance', './venv']
 
 MAKE THE MODULE RST FILES
 -------------------------
-| cd {{ projectroot }}/documentation  
+| cd {{ projectroot }}/docs  
 | sphinx-apidoc -o ./source ..
 
 GENERATE THE DOCUMENTATION
 --------------------------
-| cd {{ projectroot }}/documentation  
+| cd {{ projectroot }}/docs
 | make clean  
 | make html
 
-*There should now be a file {{ projectroot }}/documentation/build/html/index.html that gives the index of the project documentation*
+*There should now be a file {{ projectroot }}/docs/build/html/index.html that gives the index of the project documentation*
