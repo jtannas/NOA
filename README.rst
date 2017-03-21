@@ -55,7 +55,7 @@ Useful Links
     - https://wtforms-alchemy.readthedocs.io/en/latest/
 
 Todo:
-- Add tech for in browser validation using Jacascript (+?)
+- Add tech for in browser validation using Javascript (+?)
 
 Templates
 ~~~~~~~~~
