@@ -1,64 +1,61 @@
-'''
-Desc.:      The business logic for the auth module
-Purpose:    Controlling the server side behaviour of the pages
-Author:     Joel Tannas
-Date:       MAR 03, 2017
+''' The business logic & routing controller of this module
+
+The is the controller aspect of the module.
+
+References:
+    - The Parent Application
+    - The Parent Application database
+    - The Parent Application utilities
+    - This module's: database models, jinja templates, and WTForms
+
+Yields:
+    - Method: Load User Record
+    - Route: User Sign-In
+    - Route: New User Registration
+    - Route: User Log-out
+    
+Todo:
+    - Overhaul expected in the near future - See the GitHub Projects
 '''
 
 # ---------------------------------------------------------------------------
 # Generic Imports: 
 # ---------------------------------------------------------------------------
-
-# Import the environ to retrieve the reCaptcha public key
 from os import environ
-
-# Import flask dependencies
 from flask import Blueprint, request, render_template, \
                   flash, g, session, redirect, url_for
-                  
-# Import flask login
 from flask_login import login_user, logout_user, login_required, \
                         current_user
 
 # ---------------------------------------------------------------------------
-# App Imports: 
+# Application Imports: 
 # ---------------------------------------------------------------------------
-# Import the database object & login_manager
 from .. import db
 from ..utils import is_safe_url
 
-# ---------------------------------------------------------------------------
-# Module_Auth Imports: 
-# ---------------------------------------------------------------------------
-# Import the login manager
 from . import login_manager
-
-# Import module forms
 from .forms import LoginForm, RegistrationForm
-
-# Import module models
 from .models import User
 
-# Define the blueprint: 'auth'
+# ---------------------------------------------------------------------------
+# Methods, Decorators, and Vars: 
+# ---------------------------------------------------------------------------
+
+# Define the blueprint for import into the parent application
 mod_auth = Blueprint('auth', __name__, url_prefix='/auth',
                     template_folder='templates',
                     static_folder='static')
-
-# ---------------------------------------------------------------------------
-# Methods & Decorators: 
-# ---------------------------------------------------------------------------
-
+                    
 # flask_login required decorator and method 
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(user_id: int):
     ''' Gets the user for a given user id'''
+    
     return User.query.get(user_id)
 
 # ---------------------------------------------------------------------------
 # Sign In Route: 
 # ---------------------------------------------------------------------------
-
-
 @mod_auth.route('/signin/', methods=['GET', 'POST'])
 def signin():
     '''Sign-In page for the user'''
@@ -98,7 +95,8 @@ def signin():
 @mod_auth.route('/signup/', methods=['GET', 'POST'])
 def signup():
     ''' Registration page for new users '''
-    # Load the WTForm
+    
+    # Load the user form into the Registration Form format
     form = RegistrationForm(request.form)
     
     # If sign up form is submitted via POST, validate the form
@@ -125,6 +123,7 @@ def signup():
 
 def signout():
     ''' Log out route '''
+    
     if current_user.is_authenticated:
         logout_user()
         flash("You have been logged out", 'info')

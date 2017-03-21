@@ -1,5 +1,18 @@
-# WIP
+Authorization Module
+====================
+The gist of this module is that it lets you manage which users can do what.
 
+This extends to
+    - Registration
+    - Login
+    - Logout
+    - Email Confirmation
+    - Password Reset
+    - roles
+    - etc...
+
+Notes to self
+-------------
 Login using Flask-login
     https://flask-login.readthedocs.io/en/latest/
     

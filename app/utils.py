@@ -1,10 +1,14 @@
-'''
-Desc.:      Non-module specific classes and methods 
-Purpose:    Useful utilities to make like easier when coding other modules
-Author:     Joel Tannas
-Date:       MAR 07, 2017
+''' Useful utilities to make like easier when coding other modules
+
+This includes:
+    - generically applicable functions
+    - a WTForm template (to be inherited as a parent)
+    - a SQLAlchemy table template (to be inherited as a parent)
 '''
 
+# ---------------------------------------------------------------------------
+# Imports
+# ---------------------------------------------------------------------------
 from . import db
 from flask import request, session
 from flask_wtf import Form

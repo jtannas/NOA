@@ -13,6 +13,10 @@
 {% endmacro %}
 
 {# Renders Navigation Links and sets the active class (or not) #}
-{% macro nav_link(endpoint, text, glyph) %}
-    <li class="text-right {{'active' if request.endpoint.endswith(endpoint)}}"><a href="{{ url_for(endpoint) if endpoint}}">{{text}} <span class="glyphicon glyphicon-{{glyph|default('asterisk')}}"></span></a></li>
+{% macro nav_link(destination, text, glyph) %}
+  {% if destination != '' %}
+      <li class="text-right {{'active' if request.endpoint != none and request.endpoint.endswith(destination)}}"><a href="{{ url_for(destination)}}">{{text}} <span class="glyphicon glyphicon-{{glyph|default('asterisk')}}"></span></a></li>
+  {% else %}
+      <li class="text-right"><a href="">TODO: {{text}} <span class="glyphicon glyphicon-{{glyph|default('asterisk')}}"></span></a></li>
+  {% endif %}
 {% endmacro %}

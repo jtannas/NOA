@@ -1,8 +1,7 @@
-'''
-Desc.:      Initiation procedure for the auth module
-Purpose:    Creating and Configuring the auth pre-run
-Author:     Joel Tannas
-Date:       MAR 06, 2017
+''' Initiation procedure for the auth module
+
+Yields:
+    - Initiates the Login Manager
 '''
 
 # ---------------------------------------------------------------------------

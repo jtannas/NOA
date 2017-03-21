@@ -111,13 +111,13 @@ def internal_error(error):
 # -- Import the website modules
 from app.basemod.controllers import mod_base as base_module
 from app.mod_auth.controllers import mod_auth as auth_module
-#from app.mod_xyz.controllers import mod_xyz as xyz_module
+from app.mod_legal.controllers import mod_legal as legal_module
 # ...
 
 # -- Register the website modules
 app.register_blueprint(base_module)
 app.register_blueprint(auth_module)
-# app.register_blueprint(xyz_module)
+app.register_blueprint(legal_module)
 # ...
 
 # ---------------------------------------------------------------------------

@@ -10,8 +10,10 @@ WTForms-Alchemy     # WTForms + SQLAlchemy, enables form creation from database 
 
 
 # Documentation requirements
- 
- 
+Sphinx              # Documentation Software
+sphinxcontrib-napoleon  # Sphinx extension - allows different styles of docstrings
+
+
 # mod_auth requirements
 argon2_cffi         # Hash Algorithm
 Flask-Login         # Handles the login with the Auth Module
@@ -19,5 +21,3 @@ passlib             # Required for the SQLAlchemy password type
 
 
 # mod_legal requirements
-Sphinx              # Documentation Software
-sphinxcontrib-napoleon  # Sphinx extension - allows different styles of docstrings

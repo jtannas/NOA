@@ -31,6 +31,6 @@ Could Have
 
 Won't Have, but would be nice to have
 ----------------------------------------
-Export to Calender - Start with getting the website
-Login with Google/Facebook/LinkedIn - Not possible without python modules that are missing and cannot install in CS50 IDE
-HTTPS - Needs a certification and python modules that I don't have
+- Export to Calender - Start with getting the website
+- Login with Google/Facebook/LinkedIn - Not possible without python modules that are missing and cannot install in CS50 IDE
+- HTTPS - Needs a certification and python modules that I don't have
